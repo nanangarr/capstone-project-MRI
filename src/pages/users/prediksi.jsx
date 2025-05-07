@@ -102,7 +102,7 @@ export default function Prediksi({ collapsed }) {
 
                             <div>
                                 <label htmlFor="jenisKelamin" className="block text-sm font-medium mb-1">Jenis Kelamin</label>
-                                <select id="jenisKelamin" className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary" value={formData.jenisKelamin} onChange={handleChange} required>
+                                <select id="jenisKelamin" className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary text-sm" value={formData.jenisKelamin} onChange={handleChange} required>
                                     <option value="">Pilih</option>
                                     <option value="Laki-laki">Laki-laki</option>
                                     <option value="Perempuan">Perempuan</option>
