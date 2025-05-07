@@ -1,18 +1,95 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useAuth } from "@/context/AuthContext";
 
 export default function FormLogin() {
+    const [formData, setFormData] = useState({
+        username: "",
+        password: "",
+    });
+    const [errorMsg, setErrorMsg] = useState("");
+
+    const { login, isLoggedIn } = useAuth();
+    const router = useRouter();
+
+    // Redirect if already logged in
+    useEffect(() => {
+        if (isLoggedIn) {
+            router.push("/users/prediksi");
+        }
+    }, [isLoggedIn, router]);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        // Simple validation
+        if (formData.username === "admin" && formData.password === "12345") {
+            login({ username: formData.username, role: "admin" });
+            router.push("/users/prediksi");
+        } else {
+            setErrorMsg("Username atau Password Salah");
+        }
+    };
+
     return (
-        <div>
-            <div className="container mx-auto flex flex-col justify-center items-center h-screen">
-                <h1 className="text-2xl font-bold mb-4">Login</h1>
-                <form className="flex flex-col gap-4 w-full max-w-sm">
-                    <input type="email" placeholder="Email" className="p-2 border rounded" required />
-                    <input type="password" placeholder="Password" className="p-2 border rounded" required />
-                    <button type="submit" className="bg-blue-500 text-white p-2 rounded">Login</button>
-                </form>
+        <>
+            <div className="flex items-center justify-center h-screen">
+                <div className="flex flex-col bg-primary w-96 h-[520px] justify-center items-center rounded-md">
+                    <div className="flex flex-col gap-2 justify-center items-center">
+                        <p className="text-white font-bold text-4xl">Welcome to Sistem</p>
+                        <p className="text-white font-normal text-lg">Silahkan Login Terlebih Dahulu</p>
+                    </div>
+
+                    {errorMsg && (
+                        <div className="bg-red-500 text-white p-2 rounded-md mt-4 w-80 text-center">
+                            {errorMsg}
+                        </div>
+                    )}
+
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-3 mt-12">
+                        <div className="mb-4">
+                            <label htmlFor="username" className="text-white mb-1">Username</label>
+                            <Input
+                                type="text"
+                                name="username"
+                                placeholder="masukkan username"
+                                value={formData.username}
+                                onChange={handleChange}
+                                className="w-80 bg-white"
+                                required
+                            />
+                        </div>
+                        <div className="mb-7">
+                            <label htmlFor="password" className="text-white mb-1">Password</label>
+                            <Input
+                                type="password"
+                                name="password"
+                                placeholder="Password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                className="w-80 bg-white"
+                                required
+                            />
+                        </div>
+                        <Button type="submit" className="bg-secondary text-primary w-80 text-lg font-semibold">
+                            Login
+                        </Button>
+                    </form>
+                </div>
             </div>
-        </div>
+        </>
     )
 }

@@ -2,17 +2,27 @@
 
 import { Button } from "@/components/ui/button";
 import React, { useState, useEffect } from "react";
-import { Menu, X, House, LayoutDashboard } from "lucide-react";
+import { Menu, X, House, LayoutDashboard, User, LogOut } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
+import { Dropdown, DropdownItem } from "flowbite-react";
+import { useRouter } from "next/router";
 
 export default function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const pathname = usePathname();
+    const { isLoggedIn, logout, user } = useAuth();
+    const router = useRouter();
 
     useEffect(() => {
         setMobileMenuOpen(false);
     }, [pathname]);
+
+    const handleLogout = () => {
+        logout();
+        router.push("/");
+    };
 
     const navLinks = [
         { name: "Home", path: "/", icon: House },
@@ -57,14 +67,39 @@ export default function Navbar() {
                     ))}
                 </nav>
 
-                {/* Login Button */}
-                <Button className="h-9 px-4 py-3 bg-secondary hover:bg-primary rounded-md w-full md:w-auto ml-0 md:ml-4">
-                    <Link href="/login" className="text-custom whitespace-nowrap text-lg font-semibold">
-                        Login
-                    </Link>
-                </Button>
+                {/* Login Button or Profile Dropdown */}
+                {isLoggedIn ? (
+                    <div className="ml-0 md:ml-4">
+                        <Dropdown
+                            label={
+                                <div className="flex items-center gap-2 text-white">
+                                    <User size={24} className="text-white" />
+                                    <span className="hidden md:inline">{user?.username || "User"}</span>
+                                </div>
+                            }
+                            arrowIcon={false}
+                            className="bg-primary text-white"
+                        >
+                            <DropdownItem icon={User} className="flex items-center gap-2">
+                                <Link href="/profile">Profile</Link>
+                            </DropdownItem>
+                            <DropdownItem
+                                icon={LogOut}
+                                className="flex items-center gap-2"
+                                onClick={handleLogout}
+                            >
+                                Logout
+                            </DropdownItem>
+                        </Dropdown>
+                    </div>
+                ) : (
+                    <Button className="h-9 px-4 py-3 bg-secondary hover:bg-primary rounded-md w-full md:w-auto ml-0 md:ml-4">
+                        <Link href="/login" className="text-custom whitespace-nowrap text-lg font-semibold">
+                            Login
+                        </Link>
+                    </Button>
+                )}
             </div>
         </header>
-
     );
 }
