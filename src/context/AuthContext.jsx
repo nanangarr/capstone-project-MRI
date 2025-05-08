@@ -27,6 +27,13 @@ export const AuthProvider = ({ children }) => {
         setUser(userData);
         localStorage.setItem("isLoggedIn", "true");
         localStorage.setItem("user", JSON.stringify(userData));
+
+        // Redirect based on role
+        if (userData.role === "admin") {
+            router.push("/admin/dashboard");
+        } else {
+            router.push("/users/prediksi");
+        }
     };
 
     const logout = () => {
@@ -34,14 +41,28 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
         localStorage.removeItem("isLoggedIn");
         localStorage.removeItem("user");
+        router.push("/");
     };
 
     // Function to check if user can access protected routes
     const requireAuth = (path) => {
-        if (!isLoggedIn && path.startsWith("/users")) {
+        // If not logged in, redirect to login
+        if (!isLoggedIn && (path.startsWith("/users") || path.startsWith("/admin"))) {
             router.push("/login");
             return false;
         }
+
+        // If logged in but trying to access unauthorized role's path
+        if (isLoggedIn) {
+            if (user?.role === "admin" && path.startsWith("/users")) {
+                router.push("/admin/dashboard");
+                return false;
+            } else if (user?.role === "user" && path.startsWith("/admin")) {
+                router.push("/users/prediksi");
+                return false;
+            }
+        }
+
         return true;
     };
 

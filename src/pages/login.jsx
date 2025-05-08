@@ -14,15 +14,19 @@ export default function FormLogin() {
     });
     const [errorMsg, setErrorMsg] = useState("");
 
-    const { login, isLoggedIn } = useAuth();
+    const { login, isLoggedIn, user } = useAuth();
     const router = useRouter();
+    const { redirect } = router.query;
 
-    // Redirect if already logged in
     useEffect(() => {
         if (isLoggedIn) {
-            router.push("/users/prediksi");
+            if (user?.role === "admin") {
+                router.push("/admin/dashboard");
+            } else {
+                router.push("/users/prediksi");
+            }
         }
-    }, [isLoggedIn, router]);
+    }, [isLoggedIn, router, user]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -35,11 +39,16 @@ export default function FormLogin() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Simple validation
-        if (formData.username === "admin" && formData.password === "12345") {
+        // Check credentials
+        if (formData.username === "admin" && formData.password === "admin123") {
             login({ username: formData.username, role: "admin" });
-            router.push("/users/prediksi");
-        } else {
+            // Redirect is handled in the login function
+        }
+        else if (formData.username === "user" && formData.password === "user123") {
+            login({ username: formData.username, role: "user" });
+            // Redirect is handled in the login function
+        }
+        else {
             setErrorMsg("Username atau Password Salah");
         }
     };
