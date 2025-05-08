@@ -7,15 +7,13 @@ import { AuthProvider, useAuth } from "@/context/AuthContext";
 
 // Auth check component wrapper
 function AuthenticatedComponent({ Component, pageProps, collapsed }) {
-  const { isLoggedIn, requireAuth } = useAuth();
+  const { isLoggedIn, requireAuth, user } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    // Check if route needs authentication
-    if (router.pathname.startsWith('/users') && !isLoggedIn) {
-      router.push('/login');
-    }
-  }, [router, isLoggedIn]);
+    const path = router.pathname;
+    requireAuth(path);
+  }, [router, isLoggedIn, requireAuth]);
 
   return <Component {...pageProps} collapsed={collapsed} />;
 }
@@ -24,6 +22,9 @@ export default function App({ Component, pageProps }) {
   const router = useRouter();
   const currentPath = router.pathname;
   const [collapsed, setCollapsed] = useState(false);
+
+  // Check if current page is an error page
+  const isErrorPage = pageProps.statusCode && (pageProps.statusCode === 404 || pageProps.statusCode === 500);
 
   useEffect(() => {
     const handleResize = () => {
@@ -36,8 +37,9 @@ export default function App({ Component, pageProps }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const showNavbar = !currentPath.includes("/login");
-  const showSidebar = !currentPath.includes("/login") && currentPath !== "/";
+  // Update conditions for showing navbar and sidebar
+  const showNavbar = !currentPath.includes("/login") && !currentPath.includes("/admin") && !isErrorPage;
+  const showSidebar = !currentPath.includes("/login") && !currentPath.includes("/admin") && currentPath !== "/" && !isErrorPage;
 
   return (
     <>
@@ -52,9 +54,9 @@ export default function App({ Component, pageProps }) {
             </main>
           </div>
         ) : (
-          // Layout tanpa sidebar untuk home dan login
+          // Layout without sidebar for home, login, admin, and error pages
           <main className={showNavbar ? "pt-16" : ""}>
-            <Component {...pageProps} />
+            <AuthenticatedComponent Component={Component} pageProps={pageProps} collapsed={collapsed} />
           </main>
         )}
       </AuthProvider>
