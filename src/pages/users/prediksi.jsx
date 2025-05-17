@@ -3,7 +3,9 @@
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Calendar, Image as ImageIcon, FileImage, FileText, Upload } from "lucide-react";
+import { Calendar, Image as ImageIcon, Upload, User, MapPin, Heart, Droplets, Activity, ChevronRight } from "lucide-react";
+import { Textarea } from "flowbite-react";
+import PredictionResults from "@/components/users/PredictionResults";
 
 export default function Prediksi({ collapsed }) {
     // State for form input values
@@ -13,6 +15,11 @@ export default function Prediksi({ collapsed }) {
         alamat: "",
         jenisKelamin: "",
         tanggalPeriksa: "",
+        umur: "",
+        hipertensi: "",
+        diabetes: "",
+        kolesterol: "",
+        detakJantung: "",
         foto: null
     });
 
@@ -30,7 +37,6 @@ export default function Prediksi({ collapsed }) {
                 [id]: files[0]
             });
 
-            // Create image preview
             const reader = new FileReader();
             reader.onload = () => {
                 setImagePreview(reader.result);
@@ -69,189 +75,238 @@ export default function Prediksi({ collapsed }) {
 
     return (
         <>
-            <div className={`container p-6 transition-all duration-300 ${collapsed ? 'max-w-[calc(100vw-4rem)]' : 'max-w-[calc(100vw-16rem)]'}`}>
-                <h1 className="font-bold text-2xl mb-6">Prediksi Penyakit</h1>
+            <div className={`transition-all duration-300 ${collapsed ? 'max-w-[calc(100vw-4rem)]' : 'max-w-[calc(100vw-16rem)]'} p-6 bg-gray-50`}>
+                <h1 className="font-bold text-3xl mb-2 text-primary">Prediksi Penyakit</h1>
+                <p className="text-gray-600 mb-8">Masukkan data pasien untuk mendapatkan hasil prediksi penyakit</p>
 
                 <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {/* Section A: Data Diri Pasien */}
-                    <div className="">
-                        <h2 className="font-medium text-lg mb-4 text-primary border-b pb-2">A. Data Diri Pasien</h2>
-
-                        <div className="space-y-4">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label htmlFor="nama" className="block text-sm font-medium mb-1">Nama Pasien</label>
-                                    <Input id="nama" placeholder="Masukkan nama pasien" className="border-gray-300" value={formData.nama} onChange={handleChange} required />
+                    <div className="flex flex-col gap-8">
+                        {/* Section A: Data Diri Pasien */}
+                        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                            <div className="flex items-center gap-3 mb-6">
+                                <div className="bg-primary/10 p-2 rounded-lg">
+                                    <User className="h-5 w-5 text-primary" />
                                 </div>
+                                <h2 className="font-semibold text-lg text-primary">Data Diri Pasien</h2>
+                            </div>
 
-                                <div>
-                                    <label htmlFor="tanggalLahir" className="block text-sm font-medium mb-1">Tanggal Lahir</label>
-                                    <div className="relative">
-                                        <Input id="tanggalLahir" type="date" className="border-gray-300 pr-10" value={formData.tanggalLahir} onChange={handleChange} required />
-                                        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                            <Calendar size={18} className="text-gray-500" />
-                                        </div>
+                            <div className="space-y-5">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <div className="space-y-2">
+                                        <label htmlFor="nama" className="block text-sm font-medium text-gray-700">Nama Pasien</label>
+                                        <Input
+                                            id="nama"
+                                            placeholder="Masukkan nama lengkap"
+                                            className="border-gray-300 bg-gray-50 focus:bg-white transition-colors"
+                                            value={formData.nama}
+                                            onChange={handleChange}
+                                            required
+                                        />
                                     </div>
-                                </div>
-                            </div>
 
-                            <div>
-                                <label htmlFor="alamat" className="block text-sm font-medium mb-1">Alamat</label>
-                                <Input id="alamat" placeholder="Masukkan alamat pasien" className="border-gray-300" value={formData.alamat} onChange={handleChange} required />
-                            </div>
-
-                            <div>
-                                <label htmlFor="jenisKelamin" className="block text-sm font-medium mb-1">Jenis Kelamin</label>
-                                <select id="jenisKelamin" className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary text-sm" value={formData.jenisKelamin} onChange={handleChange} required>
-                                    <option value="">Pilih</option>
-                                    <option value="Laki-laki">Laki-laki</option>
-                                    <option value="Perempuan">Perempuan</option>
-                                </select>
-                            </div>
-
-                            <div>
-                                <label htmlFor="tanggalPeriksa" className="block text-sm font-medium mb-1">Tanggal Periksa</label>
-                                <div className="relative">
-                                    <Input id="tanggalPeriksa" type="date" className="border-gray-300 pr-10" value={formData.tanggalPeriksa} onChange={handleChange} required />
-                                    <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                        <Calendar size={18} className="text-gray-500" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <label htmlFor="foto" className="block text-sm font-medium mb-1">Foto Pasien</label>
-                                <div className="border border-gray-300 rounded-md p-3 text-center cursor-pointer hover:bg-gray-50 transition-colors" onClick={() => document.getElementById('foto').click()}>
-                                    <Upload size={24} className="mx-auto text-gray-500" />
-                                    <p className="text-sm text-gray-500 mt-1">Klik untuk unggah foto</p>
-                                    <Input id="foto" type="file" accept="image/*" className="hidden" onChange={handleChange} />
-                                    {formData.foto && <p className="text-xs text-gray-500 mt-1 truncate max-w-xs mx-auto">{formData.foto.name}</p>}
-                                </div>
-                            </div>
-
-                            <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-white font-medium py-2" disabled={isLoading}>
-                                {isLoading ? "Memproses..." : "Prediksi Sekarang"}
-                            </Button>
-                        </div>
-                    </div>
-
-                    {/* Section B: Hasil Prediksi with Tabs */}
-                    <div className="">
-                        <h2 className="font-medium text-lg mb-4 text-primary border-b pb-2">B. Hasil Prediksi</h2>
-
-                        {/* Tab navigation */}
-                        <div className="flex border-b mb-4 bg-primary w-full">
-                            <button
-                                type="button"
-                                className={`py-2 px-4 font-medium flex-1 flex items-center justify-center gap-2 ${activeTab === 'imagePreview'
-                                    ? 'text-white border-b-2 border-primary'
-                                    : 'text-primary'}`}
-                                onClick={() => setActiveTab('imagePreview')}
-                            >
-                                <FileImage size={18} />
-                                Preview Gambar
-                            </button>
-                            <button
-                                type="button"
-                                className={`py-2 px-4 font-medium flex-1 flex items-center justify-center gap-2 ${activeTab === 'results'
-                                    ? 'text-white border-b-2 border-primary'
-                                    : ' text-primary'}`}
-                                onClick={() => setActiveTab('results')}
-                            >
-                                <FileText size={18} />
-                                Hasil Prediksi
-                            </button>
-                        </div>
-
-                        {/* Tab content */}
-                        <div className="h-[400px] overflow-auto">
-                            {/* Image Preview Tab */}
-                            {activeTab === 'imagePreview' && (
-                                <div className="flex flex-col items-center justify-center h-full">
-                                    {imagePreview ? (
-                                        <div className="w-full">
-                                            <img
-                                                src={imagePreview}
-                                                alt="Preview"
-                                                className="max-h-[350px] object-contain mx-auto border rounded-lg shadow-sm"
+                                    <div className="space-y-2">
+                                        <label htmlFor="tanggalLahir" className="block text-sm font-medium text-gray-700">Tanggal Lahir</label>
+                                        <div className="relative">
+                                            <Input
+                                                id="tanggalLahir"
+                                                type="date"
+                                                className="border-gray-300 bg-gray-50 focus:bg-white transition-colors pr-10"
+                                                value={formData.tanggalLahir}
+                                                onChange={handleChange}
+                                                required
                                             />
-                                            <p className="text-center text-sm text-gray-500 mt-2">
-                                                {formData.foto?.name || "Gambar yang di-upload"}
-                                            </p>
+                                            <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
                                         </div>
-                                    ) : (
-                                        <div className="text-center text-gray-500">
-                                            <FileImage size={64} className="mx-auto mb-4 opacity-30" />
-                                            <p>Silahkan unggah foto pasien untuk ditampilkan di sini</p>
-                                        </div>
-                                    )}
+                                    </div>
                                 </div>
-                            )}
 
-                            {/* Results Tab */}
-                            {activeTab === 'results' && (
-                                <div className="h-full flex flex-col items-center justify-center">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <div className="space-y-2">
+                                        <label htmlFor="alamat" className="block text-sm font-medium text-gray-700">Alamat</label>
+                                        <div className="relative">
+                                            <Textarea
+                                                id="alamat"
+                                                placeholder="Masukkan alamat lengkap"
+                                                className="border-gray-300 bg-gray-50 focus:bg-white transition-colors min-h-[80px] w-full pl-9"
+                                                value={formData.alamat}
+                                                onChange={handleChange}
+                                                required
+                                                autocomplete="street-address"
+                                            />
+                                            <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <label htmlFor="jenisKelamin" className="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
+                                        <div className="grid grid-cols-2 gap-3">
+                                            <div
+                                                className={`p-3 border rounded-lg flex items-center justify-center cursor-pointer transition-all ${formData.jenisKelamin === "Laki-laki"
+                                                    ? "bg-primary/10 border-primary text-primary font-medium"
+                                                    : "bg-gray-50 border-gray-300 hover:bg-gray-100"
+                                                    }`}
+                                                onClick={() => setFormData({ ...formData, jenisKelamin: "Laki-laki" })}
+                                            >
+                                                Laki-laki
+                                            </div>
+                                            <div
+                                                className={`p-3 border rounded-lg flex items-center justify-center cursor-pointer transition-all ${formData.jenisKelamin === "Perempuan"
+                                                    ? "bg-primary/10 border-primary text-primary font-medium"
+                                                    : "bg-gray-50 border-gray-300 hover:bg-gray-100"
+                                                    }`}
+                                                onClick={() => setFormData({ ...formData, jenisKelamin: "Perempuan" })}
+                                            >
+                                                Perempuan
+                                            </div>
+                                        </div>
+                                        <input
+                                            type="hidden"
+                                            id="jenisKelamin"
+                                            value={formData.jenisKelamin}
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Section B: Data Penyakit Pasien */}
+                        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                            <div className="flex items-center gap-3 mb-6">
+                                <div className="bg-primary/10 p-2 rounded-lg">
+                                    <Heart className="h-5 w-5 text-primary" />
+                                </div>
+                                <h2 className="font-semibold text-lg text-primary">Data Kesehatan Pasien</h2>
+                            </div>
+
+                            <div className="space-y-5">
+                                <div className="space-y-2">
+                                    <label htmlFor="tanggalPeriksa" className="block text-sm font-medium text-gray-700">Tanggal Periksa</label>
+                                    <div className="relative">
+                                        <Input
+                                            id="tanggalPeriksa"
+                                            type="date"
+                                            className="border-gray-300 bg-gray-50 focus:bg-white transition-colors pr-10"
+                                            value={formData.tanggalPeriksa}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                        <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <div className="space-y-2">
+                                        <label htmlFor="umur" className="block text-sm font-medium text-gray-700">Umur</label>
+                                        <div className="relative">
+                                            <Input
+                                                id="umur"
+                                                type="number"
+                                                placeholder="Masukkan umur"
+                                                className="border-gray-300 bg-gray-50 focus:bg-white transition-colors pl-10"
+                                                value={formData.umur}
+                                                onChange={handleChange}
+                                                required
+                                            />
+                                            <span className="absolute left-0 top-0 bottom-0 w-10 flex items-center justify-center text-gray-500 border-r border-gray-300">
+                                                <span className="text-xs font-medium">Thn</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label htmlFor="detakJantung" className="block text-sm font-medium text-gray-700">Detak Jantung</label>
+                                        <div className="relative">
+                                            <Input
+                                                id="detakJantung"
+                                                type="number"
+                                                placeholder="Masukkan detak jantung"
+                                                className="border-gray-300 bg-gray-50 focus:bg-white transition-colors pl-10"
+                                                value={formData.detakJantung}
+                                                onChange={handleChange}
+                                                required
+                                            />
+                                            <Activity className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                                            <span className="absolute right-0 top-0 bottom-0 w-10 flex items-center justify-center text-gray-500 border-l border-gray-300">
+                                                <span className="text-xs font-medium">BPM</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <div className="space-y-2">
+                                        <label htmlFor="diabetes" className="block text-sm font-medium text-gray-700">Diabetes</label>
+                                        <div className="relative">
+                                            <Input
+                                                id="diabetes"
+                                                placeholder="Masukkan nilai diabetes"
+                                                className="border-gray-300 bg-gray-50 focus:bg-white transition-colors pl-10"
+                                                value={formData.diabetes}
+                                                onChange={handleChange}
+                                                required
+                                            />
+                                            <Droplets className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                                        </div>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label htmlFor="kolesterol" className="block text-sm font-medium text-gray-700">Kolesterol</label>
+                                        <div className="relative">
+                                            <Input
+                                                id="kolesterol"
+                                                placeholder="Masukkan nilai kolesterol"
+                                                className="border-gray-300 bg-gray-50 focus:bg-white transition-colors"
+                                                value={formData.kolesterol}
+                                                onChange={handleChange}
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label htmlFor="foto" className="block text-sm font-medium text-gray-700">Foto Penyakit</label>
+                                    <div
+                                        className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:bg-gray-50 transition-all"
+                                        onClick={() => document.getElementById('foto').click()}
+                                    >
+                                        <Upload size={32} className="mx-auto text-gray-400 mb-2" />
+                                        <p className="font-medium text-gray-700">Klik untuk unggah foto</p>
+                                        <p className="text-xs text-gray-500 mt-1">JPG, PNG, atau GIF (maks. 10MB)</p>
+                                        <Input id="foto" type="file" accept="image/*" className="hidden" onChange={handleChange} />
+                                        {formData.foto && <p className="text-xs text-primary mt-3 font-medium">{formData.foto.name}</p>}
+                                    </div>
+                                </div>
+
+                                <Button
+                                    type="submit"
+                                    className="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 mt-4 rounded-lg flex items-center justify-center gap-2"
+                                    disabled={isLoading}
+                                >
                                     {isLoading ? (
-                                        <div className="text-center">
-                                            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-primary border-r-transparent mx-auto mb-4"></div>
-                                            <p className="text-gray-600">Sedang memproses prediksi...</p>
-                                        </div>
-                                    ) : predictionResult ? (
-                                        <div className="w-full space-y-4">
-                                            <div className="bg-gray-50 p-4 rounded-lg">
-                                                <div className="grid grid-cols-2 gap-4">
-                                                    <div>
-                                                        <h3 className="text-sm font-medium text-gray-500">Diagnosis</h3>
-                                                        <p className="font-bold text-lg">{predictionResult.disease}</p>
-                                                    </div>
-                                                    <div>
-                                                        <h3 className="text-sm font-medium text-gray-500">Tingkat Kepercayaan</h3>
-                                                        <p className="font-bold text-lg">{predictionResult.confidence}%</p>
-                                                    </div>
-                                                </div>
-                                                <div className="mt-4">
-                                                    <h3 className="text-sm font-medium text-gray-500">Tingkat Risiko</h3>
-                                                    <div className={`inline-block px-3 py-1 rounded-full text-white font-medium mt-1 ${predictionResult.riskLevel === "High"
-                                                        ? "bg-red-500"
-                                                        : predictionResult.riskLevel === "Medium"
-                                                            ? "bg-yellow-500"
-                                                            : "bg-green-500"
-                                                        }`}>
-                                                        {predictionResult.riskLevel === "High"
-                                                            ? "Tinggi"
-                                                            : predictionResult.riskLevel === "Medium"
-                                                                ? "Sedang"
-                                                                : "Rendah"
-                                                        }
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div>
-                                                <h3 className="font-medium text-primary mb-2">Rekomendasi</h3>
-                                                <ul className="list-disc pl-5 space-y-1">
-                                                    {predictionResult.recommendations.map((rec, idx) => (
-                                                        <li key={idx} className="text-gray-700">{rec}</li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-
-                                            <div className="bg-blue-50 p-3 rounded-lg text-sm text-blue-800 border border-blue-100">
-                                                <p className="font-medium">Catatan:</p>
-                                                <p>Hasil prediksi ini bersifat indikatif dan bukan diagnosis final. Konsultasikan dengan dokter untuk evaluasi lebih lanjut.</p>
-                                            </div>
-                                        </div>
+                                        <>
+                                            <span className="animate-spin h-5 w-5 border-2 border-white/30 border-t-white rounded-full"></span>
+                                            <span>Memproses...</span>
+                                        </>
                                     ) : (
-                                        <div className="text-center text-gray-500">
-                                            <FileText size={64} className="mx-auto mb-4 opacity-30" />
-                                            <p>Hasil prediksi akan ditampilkan di sini</p>
-                                            <p className="text-sm mt-2">Isi data pasien dan klik "Prediksi Sekarang"</p>
-                                        </div>
+                                        <>
+                                            <span>Prediksi Sekarang</span>
+                                            <ChevronRight className="h-4 w-4" />
+                                        </>
                                     )}
-                                </div>
-                            )}
+                                </Button>
+                            </div>
                         </div>
                     </div>
+
+                    {/* Section C: Hasil Prediksi with Tabs - Now using the PredictionResults component */}
+                    <PredictionResults
+                        activeTab={activeTab}
+                        setActiveTab={setActiveTab}
+                        imagePreview={imagePreview}
+                        formData={formData}
+                        isLoading={isLoading}
+                        predictionResult={predictionResult}
+                    />
                 </form>
             </div>
         </>

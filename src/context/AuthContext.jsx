@@ -14,7 +14,6 @@ export const AuthProvider = ({ children }) => {
         const loginStatus = localStorage.getItem("isLoggedIn");
         if (loginStatus === "true") {
             setIsLoggedIn(true);
-            // Retrieve user data from localStorage
             const userData = localStorage.getItem("user");
             if (userData) {
                 setUser(JSON.parse(userData));
@@ -28,7 +27,6 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem("isLoggedIn", "true");
         localStorage.setItem("user", JSON.stringify(userData));
 
-        // Redirect based on role
         if (userData.role === "admin") {
             router.push("/admin/dashboard");
         } else {
@@ -44,15 +42,12 @@ export const AuthProvider = ({ children }) => {
         router.push("/");
     };
 
-    // Function to check if user can access protected routes
     const requireAuth = (path) => {
-        // If not logged in, redirect to login
         if (!isLoggedIn && (path.startsWith("/users") || path.startsWith("/admin"))) {
             router.push("/login");
             return false;
         }
 
-        // If logged in but trying to access unauthorized role's path
         if (isLoggedIn) {
             if (user?.role === "admin" && path.startsWith("/users")) {
                 router.push("/admin/dashboard");

@@ -23,7 +23,6 @@ export default function App({ Component, pageProps }) {
   const currentPath = router.pathname;
   const [collapsed, setCollapsed] = useState(false);
 
-  // Check if current page is an error page
   const isErrorPage = pageProps.statusCode && (pageProps.statusCode === 404 || pageProps.statusCode === 500);
 
   useEffect(() => {
@@ -37,9 +36,15 @@ export default function App({ Component, pageProps }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Update conditions for showing navbar and sidebar
   const showNavbar = !currentPath.includes("/login") && !currentPath.includes("/admin") && !isErrorPage;
-  const showSidebar = !currentPath.includes("/login") && !currentPath.includes("/admin") && currentPath !== "/" && !isErrorPage;
+  const showSidebar = !currentPath.includes("/login") &&
+    !currentPath.includes("/admin") &&
+    !currentPath.includes("/about") &&
+    !currentPath.includes("/pendaftaran") &&
+    !currentPath.includes("/register") &&
+    !currentPath.includes("/contact") &&
+    currentPath !== "/" &&
+    !isErrorPage;
 
   return (
     <>
@@ -54,7 +59,6 @@ export default function App({ Component, pageProps }) {
             </main>
           </div>
         ) : (
-          // Layout without sidebar for home, login, admin, and error pages
           <main className={showNavbar ? "pt-16" : ""}>
             <AuthenticatedComponent Component={Component} pageProps={pageProps} collapsed={collapsed} />
           </main>

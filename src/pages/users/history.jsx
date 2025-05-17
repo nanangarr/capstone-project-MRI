@@ -9,9 +9,42 @@ import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from 
 export default function History({ collapsed }) {
 
     const allData = [
-        { id: 1, name: "John Doe", tanggalPeriksa: "1990-01-01", gambar: "/images/hero.png", hasilPrediksi: "Terdapat gejala penyakit A dengan confidence 87.5, resiko tinggi untuk terkena penyakit A sehingga perlu dilakukan pemeriksaan lebih lanjut dengan beberapa rekomendasi berikut: 1. Rekomendasi 1, 2. Rekomendasi 2, 3. Rekomendasi 3", catatan: "Sistem sesuai dengan hasil pemeriksaan" },
-        { id: 2, name: "Jane Smith", tanggalPeriksa: "1992-02-02", gambar: "/images/hero.png", hasilPrediksi: "Terdapat gejala penyakit B dengan confidence 75.0, resiko sedang untuk terkena penyakit B sehingga perlu dilakukan pemeriksaan lebih lanjut dengan beberapa rekomendasi berikut: 1. Rekomendasi 1, 2. Rekomendasi 2, 3. Rekomendasi 3", catatan: "Sistem sesuai dengan hasil pemeriksaan" },
-        { id: 3, name: "Bob Johnson", tanggalPeriksa: "1985-03-15", gambar: "/images/hero.png", hasilPrediksi: "Terdapat gejala penyakit C dengan confidence 90.0, resiko tinggi untuk terkena penyakit C sehingga perlu dilakukan pemeriksaan lebih lanjut dengan beberapa rekomendasi berikut: 1. Rekomendasi 1, 2. Rekomendasi 2, 3. Rekomendasi 3", catatan: "Sistem sesuai dengan hasil pemeriksaan" },
+        {
+            id: 1,
+            name: "John Doe",
+            tanggalPeriksa: "1990-01-01",
+            umur: 32,
+            hipertensi: "Ya",
+            diabetes: "140 mg/dL",
+            kolesterol: "220 mg/dL",
+            detakJantung: "88 bpm",
+            gambar: "/images/hero.png",
+            hasilPrediksi: "Terdapat gejala penyakit A dengan confidence 87.5, resiko tinggi untuk terkena penyakit A sehingga perlu dilakukan pemeriksaan lebih lanjut dengan beberapa rekomendasi berikut: 1. Rekomendasi 1, 2. Rekomendasi 2, 3. Rekomendasi 3"
+        },
+        {
+            id: 2,
+            name: "Jane Smith",
+            tanggalPeriksa: "1992-02-02",
+            umur: 28,
+            hipertensi: "Tidak",
+            diabetes: "110 mg/dL",
+            kolesterol: "180 mg/dL",
+            detakJantung: "72 bpm",
+            gambar: "/images/hero.png",
+            hasilPrediksi: "Terdapat gejala penyakit B dengan confidence 75.0, resiko sedang untuk terkena penyakit B sehingga perlu dilakukan pemeriksaan lebih lanjut dengan beberapa rekomendasi berikut: 1. Rekomendasi 1, 2. Rekomendasi 2, 3. Rekomendasi 3"
+        },
+        {
+            id: 3,
+            name: "Bob Johnson",
+            tanggalPeriksa: "1985-03-15",
+            umur: 45,
+            hipertensi: "Ya",
+            diabetes: "160 mg/dL",
+            kolesterol: "250 mg/dL",
+            detakJantung: "92 bpm",
+            gambar: "/images/hero.png",
+            hasilPrediksi: "Terdapat gejala penyakit C dengan confidence 90.0, resiko tinggi untuk terkena penyakit C sehingga perlu dilakukan pemeriksaan lebih lanjut dengan beberapa rekomendasi berikut: 1. Rekomendasi 1, 2. Rekomendasi 2, 3. Rekomendasi 3"
+        },
     ]
 
     const [searchTerm, setSearchTerm] = useState("");
@@ -65,15 +98,19 @@ export default function History({ collapsed }) {
                 <div className="w-full border border-black rounded-lg overflow-x-auto">
                     <div className="min-w-full inline-block align-middle">
                         <div className="overflow-hidden">
-                            <Table striped className="table-auto w-full min-w-[800px]">
+                            <Table striped className="table-auto w-full min-w-[1200px]">
                                 <TableHead>
                                     <TableRow className="bg-gray-300 border-b">
                                         <TableHeadCell className="border-r w-12">No</TableHeadCell>
-                                        <TableHeadCell className="border-r w-1/6">Nama Pasien</TableHeadCell>
-                                        <TableHeadCell className="border-r w-1/6">Tanggal Periksa</TableHeadCell>
+                                        <TableHeadCell className="border-r">Nama Pasien</TableHeadCell>
+                                        <TableHeadCell className="border-r">Tanggal Periksa</TableHeadCell>
+                                        <TableHeadCell className="border-r w-16">Umur</TableHeadCell>
+                                        <TableHeadCell className="border-r">Hipertensi</TableHeadCell>
+                                        <TableHeadCell className="border-r">Diabetes</TableHeadCell>
+                                        <TableHeadCell className="border-r">Kolesterol</TableHeadCell>
+                                        <TableHeadCell className="border-r">Detak Jantung</TableHeadCell>
                                         <TableHeadCell className="border-r">Gambar</TableHeadCell>
-                                        <TableHeadCell className="border-r w-1/3">Hasil Prediksi</TableHeadCell>
-                                        <TableHeadCell className="border-r">Catatan</TableHeadCell>
+                                        <TableHeadCell className="border-r w-1/4">Hasil Prediksi</TableHeadCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody className="divide-y">
@@ -82,17 +119,17 @@ export default function History({ collapsed }) {
                                             <TableCell className="border-r">{startIndex + index}</TableCell>
                                             <TableCell className="border-r">{item.name}</TableCell>
                                             <TableCell className="border-r">{item.tanggalPeriksa}</TableCell>
+                                            <TableCell className="border-r text-center">{item.umur}</TableCell>
+                                            <TableCell className="border-r text-center">{item.hipertensi}</TableCell>
+                                            <TableCell className="border-r text-center">{item.diabetes}</TableCell>
+                                            <TableCell className="border-r text-center">{item.kolesterol}</TableCell>
+                                            <TableCell className="border-r text-center">{item.detakJantung}</TableCell>
                                             <TableCell className="border-r">
                                                 <img src={item.gambar} alt="Gambar" className="h-16 w-auto" />
                                             </TableCell>
                                             <TableCell className="border-r max-h-20">
                                                 <div className="overflow-y-auto break-words">
                                                     {item.hasilPrediksi}
-                                                </div>
-                                            </TableCell>
-                                            <TableCell className="border-r">
-                                                <div className="overflow-y-auto break-words">
-                                                    {item.catatan}
                                                 </div>
                                             </TableCell>
                                         </TableRow>

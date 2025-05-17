@@ -1,6 +1,3 @@
-
-"use client";
-
 import { Pagination } from "flowbite-react";
 import { useState } from "react";
 

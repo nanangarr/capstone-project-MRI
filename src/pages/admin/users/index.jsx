@@ -3,14 +3,35 @@
 import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Pagination } from "flowbite-react";
-import { Search, Trash2, SquarePen } from "lucide-react";
+import { Search, Trash2, SquarePen, UserPlus } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from "flowbite-react";
 import { AdminLayout } from "@/pages/admin-layout";
+import { Button } from "@/components/ui/button";
 
 export default function DataUser({ collapsed }) {
     const allData = [
-        { id: 1, username: "user", password: "user123"},
-        { id: 2, username: "user2", password: "user1234"},
+        {
+            id: 1,
+            username: "user",
+            password: "user123",
+            namaLengkap: "Dr. John Smith",
+            nip: "198201012010011001",
+            instansi: "RSUD Harapan Bunda",
+            jabatan: "Dokter Spesialis Jantung",
+            email: "john.smith@mail.com",
+            foto: "/images/Avatar-1.png"
+        },
+        {
+            id: 2,
+            username: "user2",
+            password: "user1234",
+            namaLengkap: "Dr. Sarah Johnson",
+            nip: "199105202012012002",
+            instansi: "RS Sejahtera",
+            jabatan: "Dokter Umum",
+            email: "sarah.johnson@mail.com",
+            foto: "/images/Avatar-2.png"
+        },
     ];
 
     // Search state
@@ -30,7 +51,10 @@ export default function DataUser({ collapsed }) {
     // Filter data based on search term
     useEffect(() => {
         const result = allData.filter((item) =>
-            item.username.toLowerCase().includes(searchTerm.toLowerCase())
+            item.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.namaLengkap.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.instansi.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.jabatan.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setFilteredData(result);
     }, [searchTerm]);
@@ -59,7 +83,13 @@ export default function DataUser({ collapsed }) {
     return (
         <>
             <AdminLayout className={`container p-4 md:p-6 transition-all duration-300 ${collapsed ? 'max-w-[calc(100vw-4rem)]' : 'max-w-[calc(100vw-16rem)]'}`}>
-                <h1 className="font-bold text-xl md:text-2xl mb-4 md:mb-6">Data Pasien</h1>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                    <h1 className="font-bold text-xl md:text-2xl">Data Tenaga Medis</h1>
+                    <Button className="bg-primary hover:bg-primary/90 gap-2 text-white">
+                        <UserPlus size={18} />
+                        <span>Tambah User</span>
+                    </Button>
+                </div>
 
                 <div className="relative w-full max-w-[345px] mb-2.5">
                     <Input id="search" type="input" placeholder="Enter search terms" value={searchTerm} onChange={handleSearchChange} className="border-gray-300 pr-10" />
@@ -69,11 +99,17 @@ export default function DataUser({ collapsed }) {
                 </div>
 
                 <div className="w-full border border-black rounded-lg overflow-x-auto">
-                    <Table striped className="w-full">
+                    <Table striped className="w-full min-w-[1000px]">
                         <TableHead>
                             <TableRow className="bg-gray-100 border-b">
                                 <TableHeadCell className="border-r whitespace-nowrap w-1">No</TableHeadCell>
-                                <TableHeadCell className="border-r whitespace-nowrap">Nama Tenaga Medis</TableHeadCell>
+                                <TableHeadCell className="border-r whitespace-nowrap">Foto</TableHeadCell>
+                                <TableHeadCell className="border-r whitespace-nowrap">Nama Lengkap</TableHeadCell>
+                                <TableHeadCell className="border-r whitespace-nowrap">NIP</TableHeadCell>
+                                <TableHeadCell className="border-r whitespace-nowrap">Instansi</TableHeadCell>
+                                <TableHeadCell className="border-r whitespace-nowrap">Jabatan</TableHeadCell>
+                                <TableHeadCell className="border-r whitespace-nowrap">Email</TableHeadCell>
+                                <TableHeadCell className="border-r whitespace-nowrap">Username</TableHeadCell>
                                 <TableHeadCell className="border-r whitespace-nowrap">Password</TableHeadCell>
                                 <TableHeadCell className="border-r whitespace-nowrap w-1">Action</TableHeadCell>
                             </TableRow>
@@ -82,14 +118,36 @@ export default function DataUser({ collapsed }) {
                             {dataTable.map((item, index) => (
                                 <TableRow key={item.id} className="hover:bg-gray-50">
                                     <TableCell className="border-r whitespace-nowrap">{startIndex + index}</TableCell>
+                                    <TableCell className="border-r">
+                                        {item.foto ? (
+                                            <img
+                                                src={item.foto}
+                                                alt={`Foto ${item.namaLengkap}`}
+                                                className="h-10 w-10 rounded-full object-cover"
+                                            />
+                                        ) : (
+                                            <div className="h-10 w-10 bg-gray-200 rounded-full flex items-center justify-center">
+                                                <span className="text-gray-500 font-medium">
+                                                    {item.namaLengkap?.charAt(0) || '?'}
+                                                </span>
+                                            </div>
+                                        )}
+                                    </TableCell>
+                                    <TableCell className="border-r whitespace-nowrap font-medium">{item.namaLengkap}</TableCell>
+                                    <TableCell className="border-r whitespace-nowrap">{item.nip}</TableCell>
+                                    <TableCell className="border-r whitespace-nowrap">{item.instansi}</TableCell>
+                                    <TableCell className="border-r whitespace-nowrap">{item.jabatan}</TableCell>
+                                    <TableCell className="border-r whitespace-nowrap">{item.email}</TableCell>
                                     <TableCell className="border-r whitespace-nowrap">{item.username}</TableCell>
-                                    <TableCell className="border-r whitespace-nowrap">{item.password}</TableCell>
+                                    <TableCell className="border-r whitespace-nowrap">
+                                        <span className="text-gray-500">••••••••</span>
+                                    </TableCell>
                                     <TableCell className="border-r whitespace-nowrap">
                                         <div className="flex gap-2">
-                                            <button className="bg-blue-500 text-white p-1 rounded-md hover:bg-blue-600 transition duration-200">
+                                            <button className="bg-blue-500 text-white p-1 rounded-md hover:bg-blue-600 transition duration-200" title="Edit user">
                                                 <SquarePen size={18} />
                                             </button>
-                                            <button className="bg-red-500 text-white p-1 rounded-md hover:bg-red-600 transition duration-200">
+                                            <button className="bg-red-500 text-white p-1 rounded-md hover:bg-red-600 transition duration-200" title="Delete user">
                                                 <Trash2 size={18} />
                                             </button>
                                         </div>

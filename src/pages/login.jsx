@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -39,14 +37,11 @@ export default function FormLogin() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Check credentials
         if (formData.username === "admin" && formData.password === "admin123") {
             login({ username: formData.username, role: "admin" });
-            // Redirect is handled in the login function
         }
         else if (formData.username === "user" && formData.password === "user123") {
             login({ username: formData.username, role: "user" });
-            // Redirect is handled in the login function
         }
         else {
             setErrorMsg("Username atau Password Salah");

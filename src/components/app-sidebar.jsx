@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { LayoutDashboard, LogOut, Users, History, Brain, ChevronLeft, ChevronRight } from "lucide-react";
+import { LayoutDashboard, LogOut, Users, History, Brain, ChevronLeft, ChevronRight, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/context/AuthContext";
 
 export function AppSidebar({ collapsed, setCollapsed }) {
     const router = useRouter();
     const currentPath = router.pathname;
+    const { logout } = useAuth();
 
     useEffect(() => {
         const handleResize = () => {
@@ -18,6 +20,11 @@ export function AppSidebar({ collapsed, setCollapsed }) {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, [setCollapsed]);
+
+    const handleLogout = () => {
+        logout();
+        router.push("/login");
+    };
 
     const sidebarLinks = [
         { name: "Prediksi", path: "/users/prediksi", icon: Brain },
@@ -57,10 +64,14 @@ export function AppSidebar({ collapsed, setCollapsed }) {
 
                 {/* logout at the bottom as footer */}
                 <div className="p-2 border-t border-[#9fdabf]/30">
-                    <Link href={logoutLink.path} className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors ${currentPath === logoutLink.path ? "bg-secondary" : "text-white hover:bg-[#9fdabf] hover:text-primary"} ${collapsed ? 'justify-center' : ''}`} title={collapsed ? logoutLink.name : ""} >
-                        {logoutLink.icon && <logoutLink.icon size={20} />}
-                        {!collapsed && <span className="font-semibold">{logoutLink.name}</span>}
-                    </Link>
+                    <button
+                        onClick={handleLogout}
+                        className={`w-full flex items-center gap-3 px-3 py-2 rounded-md transition-colors text-white hover:bg-[#9fdabf] hover:text-primary ${collapsed ? 'justify-center' : ''}`}
+                        title={collapsed ? "Logout" : ""}
+                    >
+                        <LogOut size={20} />
+                        {!collapsed && <span className="font-semibold">Logout</span>}
+                    </button>
                 </div>
             </aside>
 
