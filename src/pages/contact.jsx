@@ -36,7 +36,7 @@ export default function Contact() {
               <div className="flex items-center gap-2 mb-8">
                 <h2 className="text-3xl font-bold">
                   <span className="border-b-2 border-white pb-1">01</span>
-                  <span className="text-lg font-normal ml-2">/ KONTAK KAMI</span>
+                  <span className="text-lg font-bold ml-2">/ KONTAK KAMI</span>
                 </h2>
               </div>
 
@@ -56,7 +56,7 @@ export default function Contact() {
                   <div className="bg-opacity-20 p-2 rounded-full">
                     <Mail className="h-5 w-5" />
                   </div>
-                  <p>info@perusahaan.co.id</p>
+                  <p>info@MedBrain.co.id</p>
                 </div>
 
                 <div className="flex items-center gap-4">
@@ -85,7 +85,7 @@ export default function Contact() {
             <div className="flex items-center gap-2 mb-8">
               <h2 className="text-3xl font-bold text-gray-800">
                 <span className="border-b-2 border-green-600 pb-1">02</span>
-                <span className="text-lg font-normal ml-2">/ KIRIM PESAN ANDA DISINI</span>
+                <span className="text-lg font-bold ml-2">/ KIRIM PESAN ANDA DISINI</span>
               </h2>
             </div>
 

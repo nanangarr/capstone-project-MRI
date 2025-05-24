@@ -93,7 +93,7 @@ export default function About() {
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
                 <motion.div
-                  className="inline-block px-3 py-1 bg-[#9fdabf] text-[#3f9a82] rounded-full text-xs sm:text-sm font-medium mb-2"
+                  className="inline-block px-3 py-1 bg-[#ffff] text-[#3f9a82] rounded-full text-xs sm:text-sm font-medium mb-2"
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.4 }}
@@ -102,7 +102,7 @@ export default function About() {
                 </motion.div>
 
                 <motion.h1
-                  className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#2d2d2d] leading-tight"
+                  className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#ffff] leading-tight"
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.6 }}
@@ -111,7 +111,7 @@ export default function About() {
                 </motion.h1>
 
                 <motion.p
-                  className="text-base sm:text-lg text-[#2d2d2d] leading-relaxed"
+                  className="text-base sm:text-lg text-[#ffff] leading-relaxed"
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.8 }}
@@ -158,8 +158,8 @@ export default function About() {
             >
               <div className="flex items-center mb-2"> {item.icon} </div>
               <div className="text-center">
-                <h2 className="text-lg font-semibold ml-2">{item.tittle}</h2>
-                <p className="text-gray-600">{item.description}</p>
+                <h2 className="text-lg font-semibold ml-2 text-gray-800">{item.tittle}</h2>
+                <p className="text-gray-800">{item.description}</p>
               </div>
             </motion.div>
           ))}
@@ -175,8 +175,8 @@ export default function About() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-3xl font-bold text-[#2d2d2d]">Tim Kami</h2>
-            <p className="text-gray-600 mt-2">Bertemu dengan para talenta di balik pengembangan Med.Brain</p>
+            <h2 className="text-3xl font-bold text-[#ffff]">Tim Kami</h2>
+            <p className="text-white-600 mt-2">Bertemu dengan para talenta di balik pengembangan Med.Brain</p>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">

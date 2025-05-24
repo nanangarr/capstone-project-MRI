@@ -41,8 +41,8 @@ export default function Pendaftaran() {
       <div className="py-16 px-4 sm:px-6 lg:px-8 min-h-screen">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Formulir Pendaftaran</h1>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Formulir Pendaftaran</h1>
+            <p className="text-lg text-white max-w-2xl mx-auto">
               Silakan lengkapi formulir pendaftaran berikut untuk memulai perjalanan Anda bersama kami.
             </p>
           </div>
@@ -58,7 +58,7 @@ export default function Pendaftaran() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="space-y-6">
                     <div className="space-y-2">
-                      <label htmlFor="namaLengkap" className="flex items-center gap-2 text-sm font-medium text-gray-700">Nama Lengkap</label>
+                      <label htmlFor="namaLengkap" className="flex items-center gap-2 text-m font-bold text-gray-700">Nama Lengkap</label>
                       <Input 
                         type="text" 
                         id="namaLengkap" 
@@ -73,7 +73,7 @@ export default function Pendaftaran() {
                     </div>
 
                     <div className="space-y-2">
-                      <label htmlFor="nip" className="flex items-center gap-2 text-sm font-medium text-gray-700">NIP</label>
+                      <label htmlFor="nip" className="flex items-center gap-2 text-m font-bold text-gray-700">NIP</label>
                       <Input 
                         type="text" 
                         id="nip" 
@@ -87,7 +87,7 @@ export default function Pendaftaran() {
                     </div>
 
                     <div className="space-y-2">
-                      <label htmlFor="email" className="flex items-center gap-2 text-sm font-medium text-gray-700">Email</label>
+                      <label htmlFor="email" className="flex items-center gap-2 text-m font-bold text-gray-700">Email</label>
                       <Input 
                         type="email" 
                         id="email" 
@@ -103,7 +103,7 @@ export default function Pendaftaran() {
 
                   <div className="space-y-6">
                     <div className="space-y-2">
-                      <label htmlFor="instansi" className="flex items-center gap-2 text-sm font-medium text-gray-700">Instansi</label>
+                      <label htmlFor="instansi" className="flex items-center gap-2 text-m font-bold text-gray-700">Instansi</label>
                       <Input 
                         type="text" 
                         id="instansi" 
@@ -117,7 +117,7 @@ export default function Pendaftaran() {
                     </div>
 
                     <div className="space-y-2">
-                      <label htmlFor="jabatan" className="flex items-center gap-2 text-sm font-medium text-gray-700">Jabatan</label>
+                      <label htmlFor="jabatan" className="flex items-center gap-2 text-m font-bold text-gray-700">Jabatan</label>
                       <Input 
                         type="text" 
                         id="jabatan" 
@@ -131,7 +131,7 @@ export default function Pendaftaran() {
                     </div>
 
                     <div>
-                      <label htmlFor="foto" className="block text-sm font-medium text-gray-700 mb-1">Foto</label>
+                      <label htmlFor="foto" className="block text-m font-bold text-gray-700 mb-1">Foto</label>
                       <Input 
                         type="file" 
                         id="foto" 
@@ -139,7 +139,7 @@ export default function Pendaftaran() {
                         accept="image/*" 
                         onChange={handleFotoChange} 
                         required 
-                        className="w-full px-3 py-2 border border-gray-300 focus:outline-none focus:border-blue-500" 
+                        className="text-gray-400 w-full px-3 py-2 border border-gray-300 focus:outline-none focus:border-blue-500" 
                       />
                       {previewFoto && (
                         <div className="mt-2">

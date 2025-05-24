@@ -10,7 +10,7 @@ export default function AboutMe() {
 
                 <div className="relative z-10 flex flex-col items-center py-10 px-4">
                     <h2 className="text-white text-3xl font-bold mb-6">
-                        Tentang <span className="text-primary">Kami</span>
+                        Tentang <span className="text-primary text-white">Kami</span>
                     </h2>
 
                     <div className="w-full max-w-3xl aspect-video bg-black/20 backdrop-blur-sm p-4 rounded-lg">
@@ -24,8 +24,8 @@ export default function AboutMe() {
                         ></iframe>
                     </div>
 
-                    <div className="max-w-3xl text-center mt-6 text-white">
-                        <p className="text-sm md:text-base">
+                    <div className="max-w-3xl text-center mt-6">
+                        <p className="text-sm md:text-base text-white">
                             Med.Brain adalah platform deteksi stroke berbasis AI yang menggunakan teknologi
                             CNN untuk menganalisis citra MRI dengan akurasi tinggi.
                         </p>

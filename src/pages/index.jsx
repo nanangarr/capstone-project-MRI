@@ -51,8 +51,8 @@ export default function Home() {
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold">
               AI-Based Stroke Detection and Classification from MRI Images
             </h1>
-            <p className="text-base sm:text-lg text-gray-700">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            <p className="text-base sm:text-lg text-white">
+              Analisis MRI otak instan dengan kecerdasan buatan, untuk prediksi stroke yang akurat dan tindakan cepat.
             </p>
             <Link href="/users/prediksi">
               <Button className="p-5 rounded font-bold">Prediksi Sekarang</Button>
@@ -74,7 +74,7 @@ export default function Home() {
 
         {/* Tutorial Penggunaan */}
         <div className="flex flex-col md:flex-row gap-8 items-center">
-          <div className="flex justify-center md:justify-start">
+          <div className="bg-white p-6 rounded-lg shadow-lg flex justify-center items-center">
             <img src="/images/Tutorial.png" alt="Gambar globe" className="w-60 md:w-auto max-w-md h-auto" />
           </div>
           <div className="flex flex-col w-full">
@@ -94,7 +94,7 @@ export default function Home() {
                     {item.icon}
                     <h2 className="text-lg font-semibold ml-2">{item.title}</h2>
                   </div>
-                  <p className="text-gray-600">{item.description}</p>
+                  <p className="text-white">{item.description}</p>
                 </motion.div>
               ))}
             </div>
