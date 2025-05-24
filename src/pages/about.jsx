@@ -69,7 +69,7 @@ export default function About() {
 
   return (
     <>
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen bg-white">
         <div className="relative flex-grow overflow-hidden px-4 sm:px-6 md:px-12 lg:px-20 py-8 md:py-12">
           <div className="absolute inset-0 z-0 opacity-45">
             <img src="/images/About-2.png" alt="Background pattern" className="w-full h-full object-cover" />
@@ -93,7 +93,7 @@ export default function About() {
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
                 <motion.div
-                  className="inline-block px-3 py-1 bg-[#ffff] text-[#3f9a82] rounded-full text-xs sm:text-sm font-medium mb-2"
+                  className="inline-block px-3 py-1 text-[#3f9a82] text-s bg-green-100 rounded-full sm:text-sm font-medium mb-2"
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.4 }}
@@ -102,7 +102,7 @@ export default function About() {
                 </motion.div>
 
                 <motion.h1
-                  className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#ffff] leading-tight"
+                  className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 leading-tight"
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.6 }}
@@ -111,7 +111,7 @@ export default function About() {
                 </motion.h1>
 
                 <motion.p
-                  className="text-base sm:text-lg text-[#ffff] leading-relaxed"
+                  className="text-base sm:text-lg text-gray-600 leading-relaxed"
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.8 }}
@@ -176,7 +176,7 @@ export default function About() {
             transition={{ duration: 0.5 }}
           >
             <h2 className="text-3xl font-bold text-[#ffff]">Tim Kami</h2>
-            <p className="text-white-600 mt-2">Bertemu dengan para talenta di balik pengembangan Med.Brain</p>
+            <p className="text-gray-600 mt-2">Bertemu dengan para talenta di balik pengembangan Med.Brain</p>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">

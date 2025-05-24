@@ -42,8 +42,7 @@ export default function Countups() {
                             >
                                 {stat.icon}
                             </motion.div>
-                            {/* Ubah text-gray-800 menjadi text-white atau text-green-400 */}
-                            <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-white"> {/* <--- DI SINI */}
+                            <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800"> {/* <--- DI SINI */}
                                 {isInView ? (
                                     <CountUp
                                         start={0}
@@ -56,8 +55,7 @@ export default function Countups() {
                                     0
                                 )}+
                             </div>
-                            {/* Ubah text-gray-600 menjadi text-white atau text-green-400 */}
-                            <div className="text-white text-sm sm:text-base md:text-xl mt-1">{stat.label}</div> {/* <--- DAN DI SINI */}
+                            <div className="text-gray-600 text-sm sm:text-base md:text-xl mt-1">{stat.label}</div>
                         </motion.div>
                     ))}
                 </div>

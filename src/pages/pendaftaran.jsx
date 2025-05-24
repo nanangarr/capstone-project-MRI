@@ -38,11 +38,11 @@ export default function Pendaftaran() {
 
   return (
     <>
-      <div className="py-16 px-4 sm:px-6 lg:px-8 min-h-screen">
+      <div className="py-16 px-4 sm:px-6 lg:px-8 min-h-screen bg-white">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Formulir Pendaftaran</h1>
-            <p className="text-lg text-white max-w-2xl mx-auto">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Formulir Pendaftaran</h1>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Silakan lengkapi formulir pendaftaran berikut untuk memulai perjalanan Anda bersama kami.
             </p>
           </div>
