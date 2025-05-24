@@ -67,7 +67,7 @@ export default function Pendaftaran() {
                         onChange={handleInputChange} 
                         required 
                         placeholder="Masukkan nama lengkap" 
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all" 
+                        className="text-gray-800 w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all" 
                       />
                       <p className="text-xs text-gray-500">*Berikan nama lengkap beserta gelar jika memiliki</p>
                     </div>
@@ -82,7 +82,7 @@ export default function Pendaftaran() {
                         onChange={handleInputChange} 
                         required 
                         placeholder="Masukkan NIP" 
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all" 
+                        className="text-gray-800 w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all" 
                       />
                     </div>
 
@@ -96,7 +96,7 @@ export default function Pendaftaran() {
                         onChange={handleInputChange} 
                         required 
                         placeholder="nama@example.com" 
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all" 
+                        className="text-gray-800 w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all" 
                       />
                     </div>
                   </div>
@@ -112,7 +112,7 @@ export default function Pendaftaran() {
                         onChange={handleInputChange} 
                         required 
                         placeholder="Masukkan nama instansi" 
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all" 
+                        className="text-gray-800 w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all" 
                       />
                     </div>
 
@@ -126,7 +126,7 @@ export default function Pendaftaran() {
                         onChange={handleInputChange} 
                         required 
                         placeholder="Masukkan jabatan Anda" 
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all" 
+                        className="text-gray-800 w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all" 
                       />
                     </div>
 
@@ -139,7 +139,7 @@ export default function Pendaftaran() {
                         accept="image/*" 
                         onChange={handleFotoChange} 
                         required 
-                        className="text-gray-400 w-full px-3 py-2 border border-gray-300 focus:outline-none focus:border-blue-500" 
+                        className="text-gray-800 w-full px-3 py-2 border border-gray-300 focus:outline-none focus:border-blue-500" 
                       />
                       {previewFoto && (
                         <div className="mt-2">

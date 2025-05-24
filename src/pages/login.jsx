@@ -55,7 +55,8 @@ export default function FormLogin() {
             <div className="flex items-center justify-center h-screen bg-white">
                 <div className="flex flex-col w-96 h-[520px] justify-center items-center rounded-md">
                     <div className="flex flex-col gap-2 justify-center items-center">
-                        <p className="text-[#3f9a82] font-bold text-4xl">Welcome to Sistem</p>
+                        <p className="text-[#3f9a82] font-bold text-4xl text-center"> Selamat Datang <br />
+                            di MedBrain</p>
                         <p className="text-[#3f9a82] font-normal text-lg">Silahkan Login Terlebih Dahulu</p>
                     </div>
 
@@ -102,7 +103,7 @@ export default function FormLogin() {
                             Daftar disini
                         </Link>
                     </p>
-                    
+
                 </div>
             </div>
         </>
