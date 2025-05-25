@@ -51,7 +51,6 @@ export default function FormLogin() {
 
     return (
         <>
-            <Navbar />
             <div className="flex items-center justify-center h-screen bg-white">
                 <div className="flex flex-col w-96 h-[520px] justify-center items-center rounded-md">
                     <div className="flex flex-col gap-2 justify-center items-center">

@@ -37,7 +37,7 @@ export default function App({ Component, pageProps }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const showNavbar = !currentPath.includes("/admin") && !isErrorPage; 
+  const showNavbar = !currentPath.includes("/login") && !currentPath.includes("/admin") && !isErrorPage; 
   const showSidebar = !currentPath.includes("/login") &&
     !currentPath.includes("/admin") &&
     !currentPath.includes("/about") &&
