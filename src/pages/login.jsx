@@ -35,19 +35,32 @@ export default function FormLogin() {
         });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrorMsg("");
 
-        if (formData.username === "admin" && formData.password === "admin123") {
-            login({ username: formData.username, role: "admin" });
+    try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                nip: formData.username, // asumsi backend pakai 'nip'
+                password: formData.password,
+            }),
+        });
+
+        if (!response.ok) {
+            const errData = await response.json();
+            throw new Error(errData.message || "Login gagal");
         }
-        else if (formData.username === "user" && formData.password === "user123") {
-            login({ username: formData.username, role: "user" });
-        }
-        else {
-            setErrorMsg("Username atau Password Salah");
-        }
-    };
+
+        const data = await response.json();
+        login(data);
+    } catch (error) {
+        setErrorMsg(error.message);
+    }
+};
+
 
     return (
         <>
