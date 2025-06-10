@@ -44,7 +44,7 @@ export default function FormLogin() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                nip: formData.username, // asumsi backend pakai 'nip'
+                nip: formData.username, 
                 password: formData.password,
             }),
         });
