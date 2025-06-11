@@ -11,11 +11,9 @@ export default function FormLogin() {
         username: "",
         password: "",
     });
-    const [errorMsg, setErrorMsg] = useState("");
 
-    const { login, isLoggedIn, user } = useAuth();
+    const { login, isLoggedIn, user, error, loading } = useAuth();
     const router = useRouter();
-    const { redirect } = router.query;
 
     useEffect(() => {
         if (isLoggedIn) {
@@ -35,18 +33,9 @@ export default function FormLogin() {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
-        if (formData.username === "admin" && formData.password === "admin123") {
-            login({ username: formData.username, role: "admin" });
-        }
-        else if (formData.username === "user" && formData.password === "user123") {
-            login({ username: formData.username, role: "user" });
-        }
-        else {
-            setErrorMsg("Username atau Password Salah");
-        }
+        await login(formData);
     };
 
     return (
@@ -59,9 +48,9 @@ export default function FormLogin() {
                         <p className="text-[#3f9a82] font-normal text-lg">Silahkan Login Terlebih Dahulu</p>
                     </div>
 
-                    {errorMsg && (
+                    {error && (
                         <div className="bg-red-500 text-white p-2 rounded-md mt-4 w-80 text-center">
-                            {errorMsg}
+                            {error}
                         </div>
                     )}
 
@@ -91,8 +80,12 @@ export default function FormLogin() {
                             />
                         </div>
 
-                        <Button type="submit" className="flex items-center justify-center bg-secondary shadow-2xl text-primary w-80 text-lg font-semibold">
-                            Login
+                        <Button
+                            type="submit"
+                            className="flex items-center justify-center bg-secondary shadow-2xl text-primary w-80 text-lg font-semibold"
+                            disabled={loading}
+                        >
+                            {loading ? 'Loading...' : 'Login'}
                         </Button>
                     </form>
 
@@ -102,7 +95,6 @@ export default function FormLogin() {
                             Daftar disini
                         </Link>
                     </p>
-
                 </div>
             </div>
         </>

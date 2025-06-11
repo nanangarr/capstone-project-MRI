@@ -10,6 +10,14 @@
 !.yarn/releases
 !.yarn/versions
 
+# IDE
+/.vscode
+/.idea
+
+# Flowbite
+/.flowbite-react/
+/flowbite
+
 # testing
 /coverage
 

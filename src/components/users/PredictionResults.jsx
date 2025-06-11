@@ -9,9 +9,17 @@ export default function PredictionResults({
     isLoading,
     predictionResult
 }) {
+    // Mengubah string persentase menjadi angka
+    const formatConfidence = (confidence) => {
+        if (typeof confidence === 'string') {
+            return confidence.replace('%', '');
+        }
+        return confidence;
+    };
+
     return (
         <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 h-full">
-            {/* Tabs */}
+            {/* Tab Konten */}
             <div className="flex border-b border-gray-200 mb-6">
                 <button
                     className={`pb-3 px-4 -mb-px font-medium text-sm flex items-center gap-2 ${activeTab === "imagePreview"
@@ -35,13 +43,13 @@ export default function PredictionResults({
                 </button>
             </div>
 
-            {/* Tab Content */}
+            {/* Tab Konten */}
             <div className="h-[calc(100%-3rem)]">
-                {/* Image Preview Tab */}
+                {/* Menampilkan gambar */}
                 {activeTab === "imagePreview" && (
                     <div className="h-full flex flex-col">
                         <div className="text-center mb-4">
-                            <h3 className="font-medium text-gray-700">Gambar Penyakit</h3>
+                            <h3 className="font-medium text-gray-700">Gambar MRI</h3>
                             <p className="text-sm text-gray-500">Gambar yang diunggah akan ditampilkan di sini</p>
                         </div>
 
@@ -68,7 +76,7 @@ export default function PredictionResults({
                     </div>
                 )}
 
-                {/* Results Tab */}
+                {/* Tab Hasil */}
                 {activeTab === "results" && (
                     <div className="h-full flex flex-col">
                         {isLoading ? (
@@ -95,12 +103,12 @@ export default function PredictionResults({
                                     <h3 className="font-semibold text-gray-800 mb-3">Hasil Diagnosis</h3>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div className="bg-gray-50 p-4 rounded-lg">
-                                            <p className="text-sm text-gray-500 mb-1">Penyakit Terdeteksi</p>
+                                            <p className="text-sm text-gray-500 mb-1">Kategori Terdeteksi</p>
                                             <p className="font-semibold text-primary">{predictionResult.disease}</p>
                                         </div>
                                         <div className="bg-gray-50 p-4 rounded-lg">
                                             <p className="text-sm text-gray-500 mb-1">Tingkat Keyakinan</p>
-                                            <p className="font-semibold text-primary">{predictionResult.confidence}%</p>
+                                            <p className="font-semibold text-primary">{formatConfidence(predictionResult.confidence)}%</p>
                                         </div>
                                     </div>
                                 </div>
@@ -124,11 +132,20 @@ export default function PredictionResults({
                                                     predictionResult.riskLevel === "Medium" ? "bg-yellow-500" :
                                                         "bg-green-500"
                                                     }`}
-                                                style={{ width: `${predictionResult.confidence}%` }}
+                                                style={{ width: `${formatConfidence(predictionResult.confidence)}%` }}
                                             ></div>
                                         </div>
                                     </div>
                                 </div>
+
+                                {predictionResult.description && (
+                                    <div className="mb-6">
+                                        <h3 className="font-semibold text-gray-800 mb-3">Deskripsi</h3>
+                                        <div className="bg-gray-50 p-4 rounded-lg">
+                                            <p className="text-gray-700">{predictionResult.description}</p>
+                                        </div>
+                                    </div>
+                                )}
 
                                 <div>
                                     <h3 className="font-semibold text-gray-800 mb-3">Rekomendasi</h3>
@@ -145,7 +162,11 @@ export default function PredictionResults({
                                 </div>
 
                                 <div className="mt-auto pt-6">
-                                    <button className="w-full bg-primary/10 text-primary font-medium py-2.5 rounded-lg">
+                                    <button
+                                        type="button"
+                                        className="w-full bg-primary/10 text-primary font-medium py-2.5 rounded-lg"
+                                        onClick={() => window.print()}
+                                    >
                                         Cetak Hasil Prediksi
                                     </button>
                                 </div>

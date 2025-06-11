@@ -94,7 +94,7 @@ export default function Navbar() {
                                             <li>
                                                 <Link
                                                     href="/users/prediksi"
-                                                    className="block px-4 py-2 text-lg text-gray-700 hover:bg-gray-100"
+                                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                                     onClick={() => setDropdownOpen(false)}
                                                 >
                                                     Dashboard
@@ -104,7 +104,7 @@ export default function Navbar() {
                                             <li>
                                                 <Link
                                                     href="/users/profile"
-                                                    className="block px-4 py-2 text-lg text-gray-700 hover:bg-gray-100"
+                                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                                     onClick={() => setDropdownOpen(false)}
                                                 >
                                                     Profil
@@ -114,7 +114,7 @@ export default function Navbar() {
                                             <li>
                                                 <div
                                                     onClick={handleLogout}
-                                                    className="block px-4 py-2 text-lg text-gray-700 hover:bg-gray-100"
+                                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                                 >
                                                     Logout
                                                 </div>

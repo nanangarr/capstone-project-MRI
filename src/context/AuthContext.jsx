@@ -2,44 +2,63 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { login as loginAPI, logout as logoutAPI } from '@/services/authService';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const router = useRouter();
 
     useEffect(() => {
-        const loginStatus = localStorage.getItem("isLoggedIn");
-        if (loginStatus === "true") {
+        // cek untuk melihat apakah pengguna sudah login
+        const token = localStorage.getItem("token");
+        const userData = localStorage.getItem("user");
+
+        if (token && userData) {
             setIsLoggedIn(true);
-            const userData = localStorage.getItem("user");
-            if (userData) {
-                setUser(JSON.parse(userData));
-            }
+            setUser(JSON.parse(userData));
         }
+
+        setLoading(false);
     }, []);
 
-    const login = (userData) => {
-        setIsLoggedIn(true);
-        setUser(userData);
-        localStorage.setItem("isLoggedIn", "true");
-        localStorage.setItem("user", JSON.stringify(userData));
+    const login = async (credentials) => {
+        try {
+            setError(null);
+            setLoading(true);
 
-        if (userData.role === "admin") {
-            router.push("/admin/dashboard");
-        } else {
-            router.push("/users/prediksi");
+            const response = await loginAPI(credentials);
+
+            // Simpan token dan data pengguna ke localStorage
+            localStorage.setItem("token", response.token);
+            localStorage.setItem("user", JSON.stringify(response.user));
+            localStorage.setItem("isLoggedIn", "true");
+
+            setIsLoggedIn(true);
+            setUser(response.user);
+
+            // Redirect berdasarkan peran pengguna
+            if (response.user.role === "admin") {
+                router.push("/admin/dashboard");
+            } else {
+                router.push("/users/prediksi");
+            }
+        } catch (err) {
+            setError(err.message || "Login failed. Please check your credentials.");
+        } finally {
+            setLoading(false);
         }
     };
 
     const logout = () => {
+        logoutAPI();
         setIsLoggedIn(false);
         setUser(null);
-        localStorage.removeItem("isLoggedIn");
-        localStorage.removeItem("user");
-        router.push("/");
+        router.push("/login");
     };
 
     const requireAuth = (path) => {
@@ -62,7 +81,15 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, login, logout, user, requireAuth }}>
+        <AuthContext.Provider value={{
+            isLoggedIn,
+            login,
+            logout,
+            user,
+            requireAuth,
+            loading,
+            error
+        }}>
             {children}
         </AuthContext.Provider>
     );

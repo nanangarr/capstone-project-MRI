@@ -1,35 +1,44 @@
 "use client";
 
 import React, { useState } from "react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Calendar, Image as ImageIcon, Upload, User, MapPin, Heart, Droplets, Activity, ChevronRight } from "lucide-react";
-import { Textarea } from "flowbite-react";
+import { ChevronRight } from "lucide-react";
 import PredictionResults from "@/components/users/PredictionResults";
+import PatientPersonalForm from "@/components/users/PatientPersonalForm";
+import PatientHealthForm from "@/components/users/PatientHealthForm";
+import { submitPrediction } from "@/services/predictionService";
+import { toast } from "react-hot-toast";
 
 export default function Prediksi({ collapsed }) {
-    // State for form input values
+    // Status untuk nilai input formulir - diperbarui agar sesuai dengan skema basis data
     const [formData, setFormData] = useState({
         nama: "",
-        tanggalLahir: "",
-        alamat: "",
-        jenisKelamin: "",
-        tanggalPeriksa: "",
+        tempat_lahir: "",
+        tanggal_lahir: "",
+        no_hp: "",
+        jenis_kelamin: "",
+        berat_badan: "",
+        tinggi_badan: "",
         umur: "",
-        hipertensi: "",
-        diabetes: "",
-        kolesterol: "",
-        detakJantung: "",
-        foto: null
+        hipertensi: false,
+        penyakit_jantung: false,
+        status_nikah: "",
+        pekerjaan: "",
+        tempat_tinggal: "",
+        glukosa: "",
+        merokok: "",
+        stroke: false,
+        gambar_MRI: null
     });
 
     const [imagePreview, setImagePreview] = useState(null);
     const [activeTab, setActiveTab] = useState("imagePreview");
     const [predictionResult, setPredictionResult] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [apiError, setApiError] = useState(null);
 
     const handleChange = (e) => {
-        const { id, name, value, files, type } = e.target;
+        const { id, name, value, files, type, checked } = e.target;
 
         if (type === "file" && files.length > 0) {
             setFormData({
@@ -42,6 +51,11 @@ export default function Prediksi({ collapsed }) {
                 setImagePreview(reader.result);
             };
             reader.readAsDataURL(files[0]);
+        } else if (type === "checkbox") {
+            setFormData({
+                ...formData,
+                [id || name]: checked
+            });
         } else {
             setFormData({
                 ...formData,
@@ -50,27 +64,100 @@ export default function Prediksi({ collapsed }) {
         }
     };
 
-    // Handle form submission
-    const handleSubmit = (e) => {
+    // Validasi data formulir sebelum pengiriman
+    const validateForm = () => {
+        const requiredFields = [
+            'nama', 'tempat_lahir', 'tanggal_lahir', 'no_hp',
+            'jenis_kelamin', 'berat_badan', 'tinggi_badan', 'umur',
+            'status_nikah', 'pekerjaan', 'tempat_tinggal', 'glukosa', 'merokok'
+        ];
+
+        const missingFields = requiredFields.filter(field => !formData[field]);
+
+        if (missingFields.length > 0) {
+            const fieldNames = missingFields.map(field =>
+                field.replace('_', ' ')).join(', ');
+            toast.error(`Mohon lengkapi data berikut: ${fieldNames}`);
+            return false;
+        }
+
+        if (!formData.gambar_MRI) {
+            toast.error("Mohon unggah gambar MRI pasien");
+            return false;
+        }
+
+        return true;
+    };
+
+    // Mengatasi pengiriman formulir
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!validateForm()) {
+            return;
+        }
+
         setIsLoading(true);
+        setApiError(null);
 
-        setTimeout(() => {
-            setPredictionResult({
-                disease: "Diabetes Mellitus Type 2",
-                confidence: 87.5,
-                riskLevel: "High",
-                recommendations: [
-                    "Routine blood sugar monitoring",
-                    "Dietary modifications",
-                    "Regular exercise",
-                    "Follow-up appointment in 1 month"
-                ]
+        try {
+            // Log data yang akan dikirim untuk debugging
+            console.log("Submitting prediction with form data:", {
+                ...formData,
+                gambar_MRI: formData.gambar_MRI ? formData.gambar_MRI.name : null
             });
-            setIsLoading(false);
 
-            setActiveTab("results");
-        }, 2000);
+            const response = await submitPrediction(formData);
+
+            if (response.success) {
+                console.log("Prediction successful:", response);
+                const { patient, examination, prediction } = response.data;
+
+                // Set hasil prediksi ke state
+                setPredictionResult({
+                    patientId: patient.id,
+                    examinationId: examination.id,
+                    disease: examination.kategori,
+                    confidence: prediction.confidence.replace('%', ''),
+                    riskLevel: getRiskLevel(prediction.confidence),
+                    description: examination.deskripsi,
+                    recommendations: examination.solusi.split("\n").map(item =>
+                        item.trim().startsWith("1.") || item.trim().startsWith("2.") ?
+                            item.trim().substring(3) : item.trim()
+                    )
+                });
+
+                setActiveTab("results");
+                toast.success("Prediksi berhasil dilakukan!");
+            } else if (response.warning) {
+                toast.warning(response.message);
+                setApiError(response.message);
+            } else {
+                setApiError("Terjadi kesalahan saat memproses prediksi.");
+                toast.error("Prediksi gagal dilakukan.");
+            }
+        } catch (error) {
+            console.error("Error during prediction:", error);
+            const errorMessage = error.message || "Terjadi kesalahan saat memproses prediksi.";
+            setApiError(errorMessage);
+            toast.error("Prediksi gagal: " + errorMessage);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    // Fungsi untuk menentukan tingkat risiko berdasarkan nilai kepercayaan
+    const getRiskLevel = (confidence) => {
+        let confidenceValue;
+        if (typeof confidence === 'string') {
+            confidenceValue = parseFloat(confidence.replace('%', ''));
+        } else {
+            confidenceValue = parseFloat(confidence);
+        }
+
+        if (confidenceValue >= 75) return "High";
+        if (confidenceValue >= 50) return "Medium";
+        return "Low";
     };
 
     return (
@@ -79,226 +166,45 @@ export default function Prediksi({ collapsed }) {
                 <h1 className="font-bold text-3xl mb-2 text-primary">Prediksi Penyakit</h1>
                 <p className="text-gray-600 mb-8">Masukkan data pasien untuk mendapatkan hasil prediksi penyakit</p>
 
+                {apiError && (
+                    <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
+                        <p className="font-medium">Error: {apiError}</p>
+                    </div>
+                )}
+
                 <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="flex flex-col gap-8">
-                        {/* Section A: Data Diri Pasien */}
-                        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                            <div className="flex items-center gap-3 mb-6">
-                                <div className="bg-primary/10 p-2 rounded-lg">
-                                    <User className="h-5 w-5 text-primary" />
-                                </div>
-                                <h2 className="font-semibold text-lg text-primary">Data Diri Pasien</h2>
-                            </div>
+                        {/* Section A: Data Diri Pasien - now using modular component */}
+                        <PatientPersonalForm formData={formData} handleChange={handleChange} />
 
-                            <div className="space-y-5">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                    <div className="space-y-2">
-                                        <label htmlFor="nama" className="block text-sm font-medium text-gray-700">Nama Pasien</label>
-                                        <Input
-                                            id="nama"
-                                            placeholder="Masukkan nama lengkap"
-                                            className="border-gray-300 bg-gray-50 focus:bg-white transition-colors"
-                                            value={formData.nama}
-                                            onChange={handleChange}
-                                            required
-                                        />
-                                    </div>
+                        {/* Section B: Data Kesehatan Pasien - now using modular component */}
+                        <PatientHealthForm
+                            formData={formData}
+                            handleChange={handleChange}
+                            setFormData={setFormData}
+                            imagePreview={imagePreview}
+                        />
 
-                                    <div className="space-y-2">
-                                        <label htmlFor="tanggalLahir" className="block text-sm font-medium text-gray-700">Tanggal Lahir</label>
-                                        <div className="relative">
-                                            <Input
-                                                id="tanggalLahir"
-                                                type="date"
-                                                className="border-gray-300 bg-gray-50 focus:bg-white transition-colors pr-10"
-                                                value={formData.tanggalLahir}
-                                                onChange={handleChange}
-                                                required
-                                            />
-                                            <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                    <div className="space-y-2">
-                                        <label htmlFor="alamat" className="block text-sm font-medium text-gray-700">Alamat</label>
-                                        <div className="relative">
-                                            <Textarea
-                                                id="alamat"
-                                                placeholder="Masukkan alamat lengkap"
-                                                className="border-gray-300 bg-gray-50 focus:bg-white transition-colors min-h-[80px] w-full pl-9"
-                                                value={formData.alamat}
-                                                onChange={handleChange}
-                                                required
-                                                autocomplete="street-address"
-                                            />
-                                            <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                                        </div>
-                                    </div>
-
-                                    <div className="space-y-2">
-                                        <label htmlFor="jenisKelamin" className="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
-                                        <div className="grid grid-cols-2 gap-3">
-                                            <div
-                                                className={`p-3 border rounded-lg flex items-center justify-center cursor-pointer transition-all ${formData.jenisKelamin === "Laki-laki"
-                                                    ? "bg-primary/10 border-primary text-primary font-medium"
-                                                    : "bg-gray-50 border-gray-300 hover:bg-gray-100"
-                                                    }`}
-                                                onClick={() => setFormData({ ...formData, jenisKelamin: "Laki-laki" })}
-                                            >
-                                                Laki-laki
-                                            </div>
-                                            <div
-                                                className={`p-3 border rounded-lg flex items-center justify-center cursor-pointer transition-all ${formData.jenisKelamin === "Perempuan"
-                                                    ? "bg-primary/10 border-primary text-primary font-medium"
-                                                    : "bg-gray-50 border-gray-300 hover:bg-gray-100"
-                                                    }`}
-                                                onClick={() => setFormData({ ...formData, jenisKelamin: "Perempuan" })}
-                                            >
-                                                Perempuan
-                                            </div>
-                                        </div>
-                                        <input
-                                            type="hidden"
-                                            id="jenisKelamin"
-                                            value={formData.jenisKelamin}
-                                            required
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Section B: Data Penyakit Pasien */}
-                        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                            <div className="flex items-center gap-3 mb-6">
-                                <div className="bg-primary/10 p-2 rounded-lg">
-                                    <Heart className="h-5 w-5 text-primary" />
-                                </div>
-                                <h2 className="font-semibold text-lg text-primary">Data Kesehatan Pasien</h2>
-                            </div>
-
-                            <div className="space-y-5">
-                                <div className="space-y-2">
-                                    <label htmlFor="tanggalPeriksa" className="block text-sm font-medium text-gray-700">Tanggal Periksa</label>
-                                    <div className="relative">
-                                        <Input
-                                            id="tanggalPeriksa"
-                                            type="date"
-                                            className="border-gray-300 bg-gray-50 focus:bg-white transition-colors pr-10"
-                                            value={formData.tanggalPeriksa}
-                                            onChange={handleChange}
-                                            required
-                                        />
-                                        <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
-                                    </div>
-                                </div>
-
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                    <div className="space-y-2">
-                                        <label htmlFor="umur" className="block text-sm font-medium text-gray-700">Umur</label>
-                                        <div className="relative">
-                                            <Input
-                                                id="umur"
-                                                type="number"
-                                                placeholder="Masukkan umur"
-                                                className="border-gray-300 bg-gray-50 focus:bg-white transition-colors pl-10"
-                                                value={formData.umur}
-                                                onChange={handleChange}
-                                                required
-                                            />
-                                            <span className="absolute left-0 top-0 bottom-0 w-10 flex items-center justify-center text-gray-500 border-r border-gray-300">
-                                                <span className="text-xs font-medium">Thn</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label htmlFor="detakJantung" className="block text-sm font-medium text-gray-700">Detak Jantung</label>
-                                        <div className="relative">
-                                            <Input
-                                                id="detakJantung"
-                                                type="number"
-                                                placeholder="Masukkan detak jantung"
-                                                className="border-gray-300 bg-gray-50 focus:bg-white transition-colors pl-10"
-                                                value={formData.detakJantung}
-                                                onChange={handleChange}
-                                                required
-                                            />
-                                            <Activity className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                                            <span className="absolute right-0 top-0 bottom-0 w-10 flex items-center justify-center text-gray-500 border-l border-gray-300">
-                                                <span className="text-xs font-medium">BPM</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                    <div className="space-y-2">
-                                        <label htmlFor="diabetes" className="block text-sm font-medium text-gray-700">Diabetes</label>
-                                        <div className="relative">
-                                            <Input
-                                                id="diabetes"
-                                                placeholder="Masukkan nilai diabetes"
-                                                className="border-gray-300 bg-gray-50 focus:bg-white transition-colors pl-10"
-                                                value={formData.diabetes}
-                                                onChange={handleChange}
-                                                required
-                                            />
-                                            <Droplets className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                                        </div>
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label htmlFor="kolesterol" className="block text-sm font-medium text-gray-700">Kolesterol</label>
-                                        <div className="relative">
-                                            <Input
-                                                id="kolesterol"
-                                                placeholder="Masukkan nilai kolesterol"
-                                                className="border-gray-300 bg-gray-50 focus:bg-white transition-colors"
-                                                value={formData.kolesterol}
-                                                onChange={handleChange}
-                                                required
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="space-y-2">
-                                    <label htmlFor="foto" className="block text-sm font-medium text-gray-700">Foto Penyakit</label>
-                                    <div
-                                        className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:bg-gray-50 transition-all"
-                                        onClick={() => document.getElementById('foto').click()}
-                                    >
-                                        <Upload size={32} className="mx-auto text-gray-400 mb-2" />
-                                        <p className="font-medium text-gray-700">Klik untuk unggah foto</p>
-                                        <p className="text-xs text-gray-500 mt-1">JPG, PNG, atau GIF (maks. 10MB)</p>
-                                        <Input id="foto" type="file" accept="image/*" className="hidden" onChange={handleChange} />
-                                        {formData.foto && <p className="text-xs text-primary mt-3 font-medium">{formData.foto.name}</p>}
-                                    </div>
-                                </div>
-
-                                <Button
-                                    type="submit"
-                                    className="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 mt-4 rounded-lg flex items-center justify-center gap-2"
-                                    disabled={isLoading}
-                                >
-                                    {isLoading ? (
-                                        <>
-                                            <span className="animate-spin h-5 w-5 border-2 border-white/30 border-t-white rounded-full"></span>
-                                            <span>Memproses...</span>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <span>Prediksi Sekarang</span>
-                                            <ChevronRight className="h-4 w-4" />
-                                        </>
-                                    )}
-                                </Button>
-                            </div>
-                        </div>
+                        <Button
+                            type="submit"
+                            className="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 mt-4 rounded-lg flex items-center justify-center gap-2"
+                            disabled={isLoading}
+                        >
+                            {isLoading ? (
+                                <>
+                                    <span className="animate-spin h-5 w-5 border-2 border-white/30 border-t-white rounded-full"></span>
+                                    <span>Memproses...</span>
+                                </>
+                            ) : (
+                                <>
+                                    <span>Prediksi Sekarang</span>
+                                    <ChevronRight className="h-4 w-4" />
+                                </>
+                            )}
+                        </Button>
                     </div>
 
-                    {/* Section C: Hasil Prediksi with Tabs - Now using the PredictionResults component */}
+                    {/* Section C: Hasil Prediksi with Tabs */}
                     <PredictionResults
                         activeTab={activeTab}
                         setActiveTab={setActiveTab}
