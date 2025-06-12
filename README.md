@@ -25,38 +25,40 @@ MedBrain meningkatkan efisiensi diagnosis dengan mengurangi waktu yang dibutuhka
 
 ## 🖼️ Tangkapan Layar
 
-**1. Halaman Beranda**
-![halaman_beranda] (./public/readme/Stroke_detection (15).png)
+## 🖼️ Tangkapan Layar
 
-**2. Halaman About**
-![halaman_about] (./public/readme/Stroke_detection (14).png)
+**1. Halaman Beranda**  
+![halaman_beranda](./public/readme/Stroke_detection_(15).png)
 
-**3. Halaman Pendaftaran**
-![halaman_pendaftaran] (./public/readme/Stroke_detection (13).png)
+**2. Halaman About**  
+![halaman_about](./public/readme/Stroke_detection_(14).png)
 
-**4. Halaman Kontak**
-![halaman_kontak] (./public/readme/Stroke_detection (12).png)
+**3. Halaman Pendaftaran**  
+![halaman_pendaftaran](./public/readme/Stroke_detection_(13).png)
 
-**5. Halaman Login**
-![halaman_login] (./public/readme/Stroke_detection (11).png)
+**4. Halaman Kontak**  
+![halaman_kontak](./public/readme/Stroke_detection_(12).png)
 
-**1. Halaman Prediksi**
-![halaman_prediksi] (./public/readme/Stroke_detection (10).png)
+**5. Halaman Login**  
+![halaman_login](./public/readme/Stroke_detection_(11).png)
 
-**1. Halaman Hasil Prediksi**
-![halaman_hasil] (./public/readme/Stroke_detection (9).png)
+**6. Halaman Prediksi**  
+![halaman_prediksi](./public/readme/Stroke_detection_(10).png)
 
-**1. Halaman History**
-![halaman_history] (./public/readme/Stroke_detection (8).png)
+**7. Halaman Hasil Prediksi**  
+![halaman_hasil](./public/readme/Stroke_detection_(9).png)
 
-**1. Halaman Dashboard Admin**
-![halaman_dashboard] (./public/readme/Stroke_detection (6).png)
+**8. Halaman History**  
+![halaman_history](./public/readme/Stroke_detection_(8).png)
 
-**1. Halaman Kelola User**
-![halaman_kelola_user] (./public/readme/Stroke_detection (4).png)
+**9. Halaman Dashboard Admin**  
+![halaman_dashboard](./public/readme/Stroke_detection_(6).png)
 
-**1. Halaman ACC User Baru**
-![halaman_ACC] (./public/readme/Stroke_detection (2).png)
+**10. Halaman Kelola User**  
+![halaman_kelola_user](./public/readme/Stroke_detection_(4).png)
+
+**11. Halaman ACC User Baru**  
+![halaman_ACC](./public/readme/Stroke_detection_(2).png)
 
 ---
 
@@ -78,13 +80,13 @@ MedBrain meningkatkan efisiensi diagnosis dengan mengurangi waktu yang dibutuhka
 
 ## Gambar untuk deteksi
 
-![stroke_detection] (./public/readme/Poornima GRE-12.jpg)
-![stroke_detection] (./public/readme/Poornima GRE-10.jpg)
+![stroke_detection] (./public/readme/Poornima_GRE-12.jpg)
+![stroke_detection] (./public/readme/Poornima _RE-10.jpg)
 ![stroke_detection] (./public/readme/Normal_209.png)
-![stroke_detection] (./public/readme/Kuppusamy DWI-4.jpg)
+![stroke_detection] (./public/readme/Kuppusamy_DWI-4.jpg)
 ![stroke_detection] (./public/readme/Ischemic_22.png)
 ![stroke_detection] (./public/readme/Haemorrhagic_1.png)
-![stroke_detection] (./public/readme/Amina DWI-16.jpg)
+![stroke_detection] (./public/readme/Amina_DWI-16.jpg)
 
 ## 🛠️ Teknologi yang Digunakan
 
