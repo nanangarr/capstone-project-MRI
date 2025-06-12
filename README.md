@@ -15,9 +15,9 @@ MedBrain meningkatkan efisiensi diagnosis dengan mengurangi waktu yang dibutuhka
 ## ✨ Fitur Utama
 
 - 🔐 **Autentikasi Pengguna**: Sistem login aman dengan kontrol akses berbasis peran (admin & tenaga kesehatan)
-- 👤 **Manajemen Pasien**: Tambah dan kelola data pasien dengan mudah
+- 👤 **Manajemen Pasien**: kelola history pasien dengan mudah
 - 🧠 **Analisis Citra MRI**: Unggah hasil MRI dan dapatkan prediksi stroke berbasis AI
-- 📄 **Laporan Detail**: Terima laporan komprehensif dengan skor kepercayaan dan rekomendasi
+- 📄 **Laporan Detail**: Terima laporan komprehensif dengan skor kepercayaan dan rekomendasi solusi
 - 🕓 **Riwayat Pemeriksaan**: Lacak riwayat pemeriksaan dan hasil pasien
 - 📊 **Dashboard Admin**: Kelola pengguna dan data sistem secara efisien
 
@@ -26,6 +26,37 @@ MedBrain meningkatkan efisiensi diagnosis dengan mengurangi waktu yang dibutuhka
 ## 🖼️ Tangkapan Layar
 
 **1. Halaman Beranda**
+![halaman_beranda] (./public/readme/Stroke_detection (15).png)
+
+**2. Halaman About**
+![halaman_about] (./public/readme/Stroke_detection (14).png)
+
+**3. Halaman Pendaftaran**
+![halaman_pendaftaran] (./public/readme/Stroke_detection (13).png)
+
+**4. Halaman Kontak**
+![halaman_kontak] (./public/readme/Stroke_detection (12).png)
+
+**5. Halaman Login**
+![halaman_login] (./public/readme/Stroke_detection (11).png)
+
+**1. Halaman Prediksi**
+![halaman_prediksi] (./public/readme/Stroke_detection (10).png)
+
+**1. Halaman Hasil Prediksi**
+![halaman_hasil] (./public/readme/Stroke_detection (9).png)
+
+**1. Halaman History**
+![halaman_history] (./public/readme/Stroke_detection (8).png)
+
+**1. Halaman Dashboard Admin**
+![halaman_dashboard] (./public/readme/Stroke_detection (6).png)
+
+**1. Halaman Kelola User**
+![halaman_kelola_user] (./public/readme/Stroke_detection (4).png)
+
+**1. Halaman ACC User Baru**
+![halaman_ACC] (./public/readme/Stroke_detection (2).png)
 
 ---
 
@@ -35,10 +66,25 @@ MedBrain meningkatkan efisiensi diagnosis dengan mengurangi waktu yang dibutuhka
 
 **Akun Demo:**
 
-- Username: `user1`
+**user**
+- Username: `john doe`
+- Password: `12345678`
+
+**admin**
+- Username: `admin`
 - Password: `12345678`
 
 ---
+
+## Gambar untuk deteksi
+
+![stroke_detection] (./public/readme/Poornima GRE-12.jpg)
+![stroke_detection] (./public/readme/Poornima GRE-10.jpg)
+![stroke_detection] (./public/readme/Normal_209.png)
+![stroke_detection] (./public/readme/Kuppusamy DWI-4.jpg)
+![stroke_detection] (./public/readme/Ischemic_22.png)
+![stroke_detection] (./public/readme/Haemorrhagic_1.png)
+![stroke_detection] (./public/readme/Amina DWI-16.jpg)
 
 ## 🛠️ Teknologi yang Digunakan
 
@@ -126,12 +172,12 @@ npm start
 
 ### 🏗️ Build untuk Produksi
 medbrain/
-├── components/         # Komponen UI reusable
-├── pages/              # Halaman Next.js
-├── public/             # Aset publik (logo, gambar, dll.)
-├── styles/             # Berkas CSS & Tailwind
-├── utils/              # Fungsi utilitas
-├── config/             # Konfigurasi aplikasi
+├── components/         
+├── pages/              
+├── public/             
+├── styles/             
+├── utils/              
+├── config/             
 └── ...
 
 ---
