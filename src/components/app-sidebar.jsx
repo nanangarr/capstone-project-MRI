@@ -28,8 +28,7 @@ export function AppSidebar({ collapsed, setCollapsed }) {
 
     const sidebarLinks = [
         { name: "Prediksi", path: "/users/prediksi", icon: Brain },
-        { name: "Pasien", path: "/users/pasien", icon: Users },
-        { name: "History", path: "/users/history", icon: History },
+        { name: "History", path: "/users/pasien", icon: Users },
     ];
 
     const logoutLink = { name: "LogOut", path: "/login", icon: LogOut };

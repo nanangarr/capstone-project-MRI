@@ -109,7 +109,7 @@ export default function Prediksi({ collapsed }) {
 
             const response = await submitPrediction(formData);
 
-            if (response.success) {
+            if (response.success && !response.warning) {
                 console.log("Prediction successful:", response);
                 const { patient, examination, prediction } = response.data;
 
@@ -130,8 +130,10 @@ export default function Prediksi({ collapsed }) {
                 setActiveTab("results");
                 toast.success("Prediksi berhasil dilakukan!");
             } else if (response.warning) {
-                toast.warning(response.message);
-                setApiError(response.message);
+                // Handle warning about invalid MRI image
+                setApiError(response.message || "Gambar MRI tidak valid atau tidak memenuhi ketentuan model");
+                toast.error(response.message || "Gambar MRI tidak valid atau tidak memenuhi ketentuan model");
+                console.warn("MRI validation warning:", response);
             } else {
                 setApiError("Terjadi kesalahan saat memproses prediksi.");
                 toast.error("Prediksi gagal dilakukan.");

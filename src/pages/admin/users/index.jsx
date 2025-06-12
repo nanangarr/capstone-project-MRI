@@ -7,7 +7,7 @@ import { Search, Trash2, SquarePen, UserCheck, Loader, AlertCircle, Users } from
 import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from "flowbite-react";
 import { AdminLayout } from "@/pages/admin-layout";
 import { Button } from "@/components/ui/button";
-import { getAllUsers, getPendingUsers, removeUser } from "@/services/userService";
+import { AllUsers, PendingUsers, removeUser } from "@/services/userService";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
 
@@ -29,8 +29,8 @@ export default function DataUser({ collapsed }) {
             try {
                 setLoading(true);
                 const [users, pending] = await Promise.all([
-                    getAllUsers(),
-                    getPendingUsers()
+                    AllUsers(),
+                    PendingUsers()
                 ]);
 
                 setAllData(users);

@@ -139,7 +139,7 @@ export default function EditUser() {
         try {
             setLoading(true);
             setError(null);
-            const userData = await getUserByNIP(nip);
+            const userData = await UserByNIP(nip);
             setUser(userData);
             setFormData({
                 username: userData.username || "",
