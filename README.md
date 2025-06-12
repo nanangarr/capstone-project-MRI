@@ -90,8 +90,7 @@ MedBrain meningkatkan efisiensi diagnosis dengan mengurangi waktu yang dibutuhka
 
 ### 🩺 Manajemen Pasien
 
-- `GET /pasien` – Ambil semua data pasien
-- `POST /pasien` – Tambah data pasien
+- `GET /predictions/predict`` – Ambil semua data pasien dan riwayat prediksi
 
 ---
 
