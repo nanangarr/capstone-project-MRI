@@ -61,9 +61,9 @@ export const submitPrediction = async (formData) => {
     }
 };
 
-export const getPredictionHistory = async () => {
+export const History = async () => {
     try {
-        const response = await axiosInstance.get('/predictions/history');
+        const response = await axiosInstance.get('/patients/predictions');
         return response.data;
     } catch (error) {
         console.error('Error fetching prediction history:', error);
@@ -74,15 +74,18 @@ export const getPredictionHistory = async () => {
     }
 };
 
-export const getPredictionById = async (id) => {
+export const Pasient = async () => {
     try {
-        const response = await axiosInstance.get(`/predictions/${id}`);
-        return response.data;
+        const response = await axiosInstance.get('/patients/predictions');
+        // The API now returns patient data with image URLs already included
+        return response.data || [];
     } catch (error) {
-        console.error(`Error fetching prediction with ID ${id}:`, error);
+        console.error('Error fetching patient history:', error);
         throw error.response?.data || {
             success: false,
-            message: 'Failed to fetch prediction details.'
+            message: 'Failed to fetch patient history.'
         };
     }
 };
+
+

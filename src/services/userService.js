@@ -1,6 +1,6 @@
 import axiosInstance from '@/config/axios';
 
-export const getAllUsers = async () => {
+export const AllUsers = async () => {
     try {
         const response = await axiosInstance.get('/admin/users');
         return response.data;
@@ -9,7 +9,7 @@ export const getAllUsers = async () => {
     }
 };
 
-export const getPendingUsers = async () => {
+export const PendingUsers = async () => {
     try {
         const response = await axiosInstance.get('/admin/users/pending');
         return response.data;

@@ -6,7 +6,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
 import { Button } from "@/components/ui/button";
 import { LogOut, Users, UserCheck, UserX, Loader } from "lucide-react";
-import { getAllUsers, getPendingUsers } from "@/services/userService";
+import { AllUsers, PendingUsers } from "@/services/userService";
 import Link from "next/link";
 
 export default function AdminDashboard() {
@@ -22,8 +22,8 @@ export default function AdminDashboard() {
             try {
                 setLoading(true);
                 const [users, pending] = await Promise.all([
-                    getAllUsers(),
-                    getPendingUsers()
+                    AllUsers(),
+                    PendingUsers()
                 ]);
 
                 setAllUsers(users);

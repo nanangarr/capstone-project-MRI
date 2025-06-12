@@ -58,12 +58,12 @@ export const AuthProvider = ({ children }) => {
         logoutAPI();
         setIsLoggedIn(false);
         setUser(null);
-        router.push("/login");
+        router.push("/");
     };
 
     const requireAuth = (path) => {
         if (!isLoggedIn && (path.startsWith("/users") || path.startsWith("/admin"))) {
-            router.push("/login");
+            router.push("/");
             return false;
         }
 

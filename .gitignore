@@ -14,10 +14,6 @@
 /.vscode
 /.idea
 
-# Flowbite
-/.flowbite-react/
-/flowbite
-
 # testing
 /coverage
 
