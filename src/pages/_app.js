@@ -8,14 +8,21 @@ import { AnimatePresence, motion } from "framer-motion"; // <--- Import AnimateP
 
 // Auth check component wrapper
 function AuthenticatedComponent({ Component, pageProps, collapsed }) {
-  const { isLoggedIn, requireAuth, user } = useAuth();
+  const { isLoggedIn, requireAuth, user, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    const path = router.pathname;
-    requireAuth(path);
-  }, [router, isLoggedIn, requireAuth]);
+    // Only run auth check after authentication state is loaded
+    // and not during initial loading state
+    if (!loading) {
+      const path = router.pathname;
+      if (path) {
+        requireAuth(path);
+      }
+    }
+  }, [router.pathname, isLoggedIn, requireAuth, loading]);
 
+  // Show loading state or the actual component
   return <Component {...pageProps} collapsed={collapsed} />;
 }
 

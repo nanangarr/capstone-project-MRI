@@ -65,7 +65,7 @@ export default function Home() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
           >
-            <img src="/images/hero_1.png" alt="Gambar globe" className="w-64 md:w-auto max-w-md h-auto" />
+            <img src="/images/Hero_1.png" alt="Gambar globe" className="w-64 md:w-auto max-w-md h-auto" />
           </motion.div>
         </div>
 

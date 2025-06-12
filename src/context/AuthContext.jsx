@@ -62,8 +62,10 @@ export const AuthProvider = ({ children }) => {
     };
 
     const requireAuth = (path) => {
+        if (loading) return true;
+        
         if (!isLoggedIn && (path.startsWith("/users") || path.startsWith("/admin"))) {
-            router.push("/");
+            router.push("/login");
             return false;
         }
 
@@ -71,7 +73,9 @@ export const AuthProvider = ({ children }) => {
             if (user?.role === "admin" && path.startsWith("/users")) {
                 router.push("/admin/dashboard");
                 return false;
-            } else if (user?.role === "user" && path.startsWith("/admin")) {
+            }
+
+            else if (user?.role !== "admin" && path.startsWith("/admin")) {
                 router.push("/users/prediksi");
                 return false;
             }

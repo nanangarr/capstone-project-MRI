@@ -17,7 +17,7 @@ export function Footers() {
                     <div className="flex flex-col lg:flex-row w-full gap-8 sm:gap-16 lg:gap-32 py-8">
                         <div className="w-full lg:w-auto lg:max-w-xs">
                             <FooterBrand
-                                src="/images/logo_1.png"
+                                src="/images/Logo_1.png"
                                 alt="Med.Brain Logo"
                                 name="Med.Brain"
                                 className="w-32 h-full object-cover"
