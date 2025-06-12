@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { AdminLayout } from "@/pages/admin-layout";
+import AdminLayout from "@/pages/admin-layout";
 import { Avatar } from 'flowbite-react';
 import { useAuth } from "@/context/AuthContext";
 

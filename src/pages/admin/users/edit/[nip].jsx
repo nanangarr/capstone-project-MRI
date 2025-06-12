@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { AdminLayout } from "@/pages/admin-layout";
+import AdminLayout from "@/pages/admin-layout";
 import { getUserByNIP, updateUserByNIP } from "@/services/userService";
 import { toast } from "react-hot-toast";
 import { ArrowLeft, Loader, Save, AlertCircle, RefreshCw, Eye, EyeOff } from "lucide-react";
@@ -49,7 +49,7 @@ export default function EditUser() {
                     // Populate all form fields with user data
                     setFormData({
                         username: userData.username || "",
-                        password: userData.password || "", 
+                        password: userData.password || "",
                         nama_lengkap: userData.nama_lengkap || "",
                         instansi: userData.instansi || "",
                         jabatan: userData.jabatan || "",
@@ -113,7 +113,7 @@ export default function EditUser() {
                 instansi: formData.instansi,
                 jabatan: formData.jabatan,
                 email: formData.email,
-                isApproved: 1 
+                isApproved: 1
             });
 
             console.log("API Response:", response);
@@ -143,7 +143,7 @@ export default function EditUser() {
             setUser(userData);
             setFormData({
                 username: userData.username || "",
-                password: "", 
+                password: "",
                 nama_lengkap: userData.nama_lengkap || "",
                 instansi: userData.instansi || "",
                 jabatan: userData.jabatan || "",

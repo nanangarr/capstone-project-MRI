@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Pagination } from "flowbite-react";
 import { Search, Trash2, SquarePen, UserCheck, Loader, AlertCircle, Users } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from "flowbite-react";
-import { AdminLayout } from "@/pages/admin-layout";
+import AdminLayout from "@/pages/admin-layout";
 import { Button } from "@/components/ui/button";
 import { AllUsers, PendingUsers, removeUser } from "@/services/userService";
 import { toast } from "react-hot-toast";

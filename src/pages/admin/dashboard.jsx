@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { AdminLayout } from "../admin-layout";
+import AdminLayout from "../admin-layout";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
 import { Button } from "@/components/ui/button";
