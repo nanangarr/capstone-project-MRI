@@ -1,5 +1,5 @@
 import "@/styles/globals.css";
-import Navbar from "@/components/Navbar"; // Perhatikan huruf besar di sini
+import Navbar from "@/components/navbar";
 import { useRouter } from "next/router";
 import { AppSidebar } from "@/components/app-sidebar";
 import { useState, useEffect } from "react";
