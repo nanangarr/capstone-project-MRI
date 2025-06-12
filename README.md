@@ -1,6 +1,6 @@
 # 🧠 MedBrain - Deteksi dan Klasifikasi Stroke Berbasis AI dari Citra MRI
 
-![MedBrain Logo](./public/images/Logo_1.png)
+<img src="./public/images/Logo_1.png" alt="MedBrain Logo" width="200" />
 
 **MedBrain** adalah platform berbasis kecerdasan buatan (AI) yang dirancang untuk membantu dokter dan institusi kesehatan dalam menganalisis citra MRI otak serta memprediksi jenis stroke secara otomatis menggunakan teknologi *Convolutional Neural Network* (CNN).
 
