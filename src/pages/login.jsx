@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/navbar";
 
 export default function FormLogin() {
     const [formData, setFormData] = useState({
