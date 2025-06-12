@@ -1,4 +1,4 @@
-# 🧠 MedBrain - Deteksi dan Klasifikasi Stroke Berbasis AI dari Citra MRI
+# 🧠 MedBrain - AI-Based Stroke Detection and Classification from MRI Images
 
 <img src="./public/images/Logo_1.png" alt="MedBrain Logo" width="200" />
 
@@ -54,10 +54,15 @@ MedBrain meningkatkan efisiensi diagnosis dengan mengurangi waktu yang dibutuhka
 ### 🖥️ Backend
 
 - [Node.js](https://nodejs.org/) + Express.js
-- [MongoDB](https://www.mongodb.com/)
+- Mysql untuk database
 - [JWT](https://jwt.io/) untuk autentikasi
-- Model CNN (Python) untuk klasifikasi stroke dari MRI
+- tensorflow-node untuk menjalankan model machine learning di server
 
+### 🖥️ Machine Learning
+- Google Colab
+- Python
+- CNN Model untuk deteksi stroke dari citra MRI
+- 
 ### 🚢 Deployment
 
 - Frontend: [Vercel](https://vercel.com/)
