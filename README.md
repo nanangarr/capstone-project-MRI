@@ -80,8 +80,7 @@ MedBrain meningkatkan efisiensi diagnosis dengan mengurangi waktu yang dibutuhka
 
 ## Gambar untuk deteksi
 
-![stroke_detection](./public/readme/Poornima_GRE-12.jpg),
-![stroke_detection](./public/readme/Poornima_RE-10.jpg),
+![stroke_detection](./public/readme/Poornima_GRE-10.jpg),
 ![stroke_detection](./public/readme/Normal_209.png),
 ![stroke_detection](./public/readme/Kuppusamy_DWI-4.jpg),
 ![stroke_detection](./public/readme/Ischemic_22.png),
