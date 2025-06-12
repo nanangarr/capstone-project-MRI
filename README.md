@@ -80,12 +80,12 @@ MedBrain meningkatkan efisiensi diagnosis dengan mengurangi waktu yang dibutuhka
 
 ## Gambar untuk deteksi
 
-![stroke_detection](./public/readme/Poornima_GRE-10.jpg),
-![stroke_detection](./public/readme/Normal_209.png),
-![stroke_detection](./public/readme/Kuppusamy_DWI-4.jpg),
-![stroke_detection](./public/readme/Ischemic_22.png),
-![stroke_detection](./public/readme/Haemorrhagic_1.png),
-![stroke_detection](./public/readme/Amina_DWI-16.jpg)
+<img src="./public/readme/Poornima_GRE-10.jpg" width="300" alt="stroke_detection" />
+<img src="./public/readme/Normal_209.png" width="300" alt="stroke_detection" />
+<img src="./public/readme/Kuppusamy_DWI-4.jpg" width="300" alt="stroke_detection" />
+<img src="./public/readme/Ischemic_22.png" width="300" alt="stroke_detection" />
+<img src="./public/readme/Haemorrhagic_1.png" width="300" alt="stroke_detection" />
+<img src="./public/readme/Amina_DWI-16.jpg" width="300" alt="stroke_detection" />
 
 ## 🛠️ Teknologi yang Digunakan
 
