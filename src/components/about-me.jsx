@@ -16,8 +16,8 @@ export default function AboutMe() {
                     <div className="w-full max-w-3xl aspect-video bg-black/20 backdrop-blur-sm p-4 rounded-lg">
                         <iframe
                             className="w-full h-full rounded-md"
-                            src="https://www.youtube.com/embed/xxxxxxxxxxx"
-                            title="Zi.Care Journey"
+                            src="https://www.youtube.com/embed/Y2bkBgQvO8U?si=HThan0CAFnvo9P4g"
+                            title="MedBrain"
                             frameBorder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             allowFullScreen
