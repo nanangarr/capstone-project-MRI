@@ -25,8 +25,6 @@ MedBrain meningkatkan efisiensi diagnosis dengan mengurangi waktu yang dibutuhka
 
 ## 🖼️ Tangkapan Layar
 
-## 🖼️ Tangkapan Layar
-
 **1. Halaman Beranda**  
 ![halaman_beranda](./public/readme/Stroke_detection_(15).png)
 
@@ -64,7 +62,7 @@ MedBrain meningkatkan efisiensi diagnosis dengan mengurangi waktu yang dibutuhka
 
 ## 🚀 Akses Demo
 
-🔗 **Live Demo**: [https://medbrain.vercel.app](https://medbrain.vercel.app)
+🔗 **Live Demo**: [https://capstone-project-mri.vercel.app](https://capstone-project-mri.vercel.app)
 
 **Akun Demo:**
 
